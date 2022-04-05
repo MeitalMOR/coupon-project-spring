@@ -1,6 +1,6 @@
 package com.meital.couponproject.entities;
 
-import com.meital.couponproject.Enum.CouponCategory;
+import com.meital.couponproject.enums.CouponCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

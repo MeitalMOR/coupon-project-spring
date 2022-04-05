@@ -1,7 +1,7 @@
 package com.meital.couponproject.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.meital.couponproject.Enum.CouponCategory;
+import com.meital.couponproject.enums.CouponCategory;
 import com.meital.couponproject.entities.Company;
 import lombok.AllArgsConstructor;
 import lombok.Data;

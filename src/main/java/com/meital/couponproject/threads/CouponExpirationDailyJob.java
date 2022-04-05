@@ -1,13 +1,12 @@
 package com.meital.couponproject.threads;
 
-import com.meital.couponproject.Enum.ErrorType;
+import com.meital.couponproject.enums.ErrorType;
 import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.exceptions.ApplicationException;
 import lombok.SneakyThrows;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static com.meital.couponproject.constants.Constants.SINGLE_DAY_IN_MILLI_SECONDS;
 

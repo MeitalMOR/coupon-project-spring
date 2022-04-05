@@ -1,4 +1,4 @@
-package com.meital.couponproject.Enum;
+package com.meital.couponproject.enums;
 
 public enum CouponCategory {
     FOOD(1),

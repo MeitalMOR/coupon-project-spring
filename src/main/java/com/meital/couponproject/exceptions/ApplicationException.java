@@ -1,6 +1,6 @@
 package com.meital.couponproject.exceptions;
 
-import com.meital.couponproject.Enum.ErrorType;
+import com.meital.couponproject.enums.ErrorType;
 import lombok.Getter;
 
 public class ApplicationException extends Exception {
