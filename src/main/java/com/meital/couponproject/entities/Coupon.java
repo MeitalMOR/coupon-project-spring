@@ -8,7 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "coupons")
@@ -68,14 +67,5 @@ public class Coupon {
         this.price = i_price;
         this.image = j_image;
     }
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "purchase_coupons",
-            joinColumns = @JoinColumn(name = "coupon_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id")
-    )
-    private List<Customer> customers;
-
 }
 
