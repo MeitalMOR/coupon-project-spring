@@ -1,6 +1,7 @@
 package com.meital.couponproject.entities;
 
 import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,18 +12,15 @@ import javax.persistence.*;
 @ToString
 public class Purchase {
 
-
     @Id
-    @GeneratedValue
-    long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @ManyToOne
     private Customer customer;
 
     @ManyToOne
     private Coupon coupon;
-
-    //-----------------------------Constructors---------------------------------------
 
     public Purchase(Customer customer, Coupon coupon) {
         this.customer = customer;

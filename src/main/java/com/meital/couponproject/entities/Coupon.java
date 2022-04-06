@@ -17,15 +17,13 @@ import java.time.LocalDate;
 @Data
 public class Coupon {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @ManyToOne
     @Column(name = "company_id", nullable = false)
-    private Company companyId;
+    private Long companyId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
@@ -37,11 +35,9 @@ public class Coupon {
     @Column(name = "description")
     private String description;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
@@ -54,9 +50,8 @@ public class Coupon {
     @Column(name = "image")
     private String image;
 
-    public Coupon(Company companyId, CouponCategory category, String title,
-                  String description, LocalDate startDate, LocalDate endDate,
-                  Integer amount, Double i_price, String j_image) {
+    public Coupon(Long companyId, CouponCategory category, String title, String description,
+                  LocalDate startDate, LocalDate endDate, Integer amount, Double price, String image) {
         this.companyId = companyId;
         this.category = category;
         this.title = title;
@@ -64,8 +59,9 @@ public class Coupon {
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
-        this.price = i_price;
-        this.image = j_image;
+        this.price = price;
+        this.image = image;
     }
+
 }
 
