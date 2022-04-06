@@ -1,16 +1,14 @@
 package com.meital.couponproject.entities;
 
 import com.meital.couponproject.enums.CouponCategory;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "coupons")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -49,19 +47,5 @@ public class Coupon {
 
     @Column(name = "image")
     private String image;
-
-    public Coupon(Long companyId, CouponCategory category, String title, String description,
-                  LocalDate startDate, LocalDate endDate, Integer amount, Double price, String image) {
-        this.companyId = companyId;
-        this.category = category;
-        this.title = title;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.amount = amount;
-        this.price = price;
-        this.image = image;
-    }
-
 }
 

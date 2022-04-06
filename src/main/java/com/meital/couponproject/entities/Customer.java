@@ -1,15 +1,12 @@
 package com.meital.couponproject.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "customers")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -33,10 +30,4 @@ public class Customer {
     @Column(name = "password", nullable = false)
     private String password;
 
-    public Customer(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 }

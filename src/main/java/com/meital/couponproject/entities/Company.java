@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "companies")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -25,10 +26,4 @@ public class Company {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    public Company(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 }

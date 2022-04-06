@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "purchases")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -21,10 +22,5 @@ public class Purchase {
 
     @ManyToOne
     private Coupon coupon;
-
-    public Purchase(Customer customer, Coupon coupon) {
-        this.customer = customer;
-        this.coupon = coupon;
-    }
 }
 
