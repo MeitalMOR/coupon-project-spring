@@ -4,6 +4,7 @@ To Do List:
     2. Application Exception- Works on web design.
     3. LoginManager
     4. Tests
+    5. add to string method to entities
 
 
 Done:
@@ -14,11 +15,17 @@ Done:
     5. Repositories - company, customer, coupon, purchase.
     6. Repositories method testing -
         A. company repository -
-            *exist by email ans password
+            *exist by email and password
             *exist by id
             *exist by name
-        B.
-
+        B. customer repository -
+            *exist by email and password
+            *exist by id
+        c. coupon repository -
+            *exists By Title
+            *exist by id
+            *find By CompanyId
+            *find By CompanyId And Category
     7. Company Service -
         A. Create coupon method
 
