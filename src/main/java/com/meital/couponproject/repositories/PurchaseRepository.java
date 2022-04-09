@@ -1,14 +1,21 @@
 package com.meital.couponproject.repositories;
 
+import com.meital.couponproject.entities.Coupon;
+import com.meital.couponproject.entities.Purchase;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface PurchaseRepository {
-    //List<Coupon> findCouponsByCustomerId (Long customerId);
+public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
-    //add coupon purchase by customerId and couponId
+    List<Coupon> findCouponsByCustomerId(Long customerId);
 
-    //delete coupon purchase by customerId
+    void deletePurchaseByCustomerId(Long customerId);
 
-    //delete coupon purchase by couponId
+    void deletePurchaseByCouponId(Long couponId);
+
+    boolean existsByCustomerIdAndCouponId(Long customerId, Long couponId);
+
 }
