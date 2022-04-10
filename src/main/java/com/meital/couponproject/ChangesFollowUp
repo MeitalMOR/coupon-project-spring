@@ -1,11 +1,10 @@
 To Do List:
 
     1. Thread: CouponExpirationDailyJob - fix the run method- add the logics classes.
-    2. Application Exception- Works on web design.
-    3. LoginManager
-    4. Tests
-    5. add to string method to entities
-    6.need to add an update methods to the service
+    2. LoginManager
+    3. Tests
+    4. add to string method to entities
+    5. need to add an update methods to the service
 
 
 Done:
@@ -27,9 +26,11 @@ Done:
             *exist by id
             *find By CompanyId
             *find By CompanyId And Category
-    7. Company Service -
-        A. Create coupon method
-    8. Admin Service -
-        A. Created company method.
+    7.Service-
+        A.Company Service - created coupon method
+        B.Admin Service - created company method.
+    8.Application Exception- Works on web design.
+
+
 
 

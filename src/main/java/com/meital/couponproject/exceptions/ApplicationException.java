@@ -9,8 +9,8 @@ public class ApplicationException extends Exception {
     private final ErrorType errorType;
 
     // This is used when the exception is intentionally thrown
-    public ApplicationException(ErrorType errorType, String message) {
-        super(errorType + " | " + message);
+    public ApplicationException(ErrorType errorType) {
+        super(errorType + " | " + errorType.getInternalErrorCode() + " | " + errorType.getInternalMessage());
         this.errorType = errorType;
     }
 }

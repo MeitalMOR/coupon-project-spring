@@ -2,7 +2,6 @@ package com.meital.couponproject.service;
 
 import com.meital.couponproject.entities.Company;
 import com.meital.couponproject.entities.Customer;
-import com.meital.couponproject.enums.ErrorType;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repositories.CompanyRepository;
 import com.meital.couponproject.repositories.CustomerRepository;
@@ -20,10 +19,10 @@ public class AdminService {
     //company service
     public void createCompany(final Company company) throws ApplicationException {
         if (companyRepository.existsByNameIgnoreCase(company.getName())) {
-            throw new ApplicationException(COMPANY_NAME_ALREADY_EXISTS, COMPANY_NAME_ALREADY_EXISTS.getInternalMessage());
+            throw new ApplicationException(COMPANY_NAME_ALREADY_EXISTS);
         }
         if (companyRepository.existsByEmail(company.getEmail())) {
-            throw new ApplicationException(EMAIL_ALREADY_EXISTS, EMAIL_ALREADY_EXISTS.getInternalMessage());
+            throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
         companyRepository.save(company);
     }
@@ -35,13 +34,13 @@ public class AdminService {
             company.setEmail(emailToUpdate);
             companyRepository.save(company);
         }
-        throw new ApplicationException(DATA_NOT_FOUND, DATA_NOT_FOUND.getInternalMessage());
+        throw new ApplicationException(DATA_NOT_FOUND);
     }
 
 
     public void deleteCompany(final long id) throws ApplicationException {
         if (!companyRepository.existsById(id)) {
-            throw new ApplicationException(DATA_NOT_FOUND, DATA_NOT_FOUND.getInternalMessage());
+            throw new ApplicationException(DATA_NOT_FOUND);
         }
         companyRepository.deleteById(id);
     }
@@ -49,7 +48,7 @@ public class AdminService {
     public Company getCompany(final long id) throws ApplicationException {
         Company company = companyRepository.findById(id).orElse(null);
         if (company == null) {
-            throw new ApplicationException(DATA_NOT_FOUND, DATA_NOT_FOUND.getInternalMessage());
+            throw new ApplicationException(DATA_NOT_FOUND);
         }
         return company;
     }
