@@ -10,12 +10,7 @@ public class ApplicationException extends Exception {
 
     // This is used when the exception is intentionally thrown
     public ApplicationException(ErrorType errorType, String message) {
-        super(message);
-        this.errorType = errorType;
-    }
-
-    public ApplicationException(ErrorType errorType, String message, Exception e) {
-        super(message, e);
+        super(errorType + " | " + message);
         this.errorType = errorType;
     }
 }

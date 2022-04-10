@@ -2,28 +2,56 @@ package com.meital.couponproject.service;
 
 import com.meital.couponproject.entities.Company;
 import com.meital.couponproject.entities.Customer;
+import com.meital.couponproject.enums.ErrorType;
+import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repositories.CompanyRepository;
 import com.meital.couponproject.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.meital.couponproject.enums.ErrorType.*;
+
 @Service
 @RequiredArgsConstructor
-public class  AdminService {
+public class AdminService {
     private final CompanyRepository companyRepository;
     private final CustomerRepository customerRepository;
 
     //company service
-    public void createCompany(final Company company) {
+    public void createCompany(final Company company) throws ApplicationException {
+        if (companyRepository.existsByNameIgnoreCase(company.getName())) {
+            throw new ApplicationException(COMPANY_NAME_ALREADY_EXISTS, COMPANY_NAME_ALREADY_EXISTS.getInternalMessage());
+        }
+        if (companyRepository.existsByEmail(company.getEmail())) {
+            throw new ApplicationException(EMAIL_ALREADY_EXISTS, EMAIL_ALREADY_EXISTS.getInternalMessage());
+        }
         companyRepository.save(company);
     }
 
-    public Company getCompany(final long id) {
-        return companyRepository.findById(id).orElse(null);
+    public void updateCompany(final long id) throws ApplicationException {
+        String emailToUpdate = "company@gmail.com";
+        Company company = companyRepository.findById(id).orElse(null);
+        if (company != null) {
+            company.setEmail(emailToUpdate);
+            companyRepository.save(company);
+        }
+        throw new ApplicationException(DATA_NOT_FOUND, DATA_NOT_FOUND.getInternalMessage());
     }
 
-    public void deleteCompany(final long id) {
+
+    public void deleteCompany(final long id) throws ApplicationException {
+        if (!companyRepository.existsById(id)) {
+            throw new ApplicationException(DATA_NOT_FOUND, DATA_NOT_FOUND.getInternalMessage());
+        }
         companyRepository.deleteById(id);
+    }
+
+    public Company getCompany(final long id) throws ApplicationException {
+        Company company = companyRepository.findById(id).orElse(null);
+        if (company == null) {
+            throw new ApplicationException(DATA_NOT_FOUND, DATA_NOT_FOUND.getInternalMessage());
+        }
+        return company;
     }
 
     //customer service
