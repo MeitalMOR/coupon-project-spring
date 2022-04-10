@@ -14,6 +14,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     public Coupon createCoupon(final Coupon coupon) {
+        //need to add a condition: if the coupon is exists in specific company
         if (couponRepository.existsByTitleIgnoreCase(coupon.getTitle())) {
             throw new RuntimeException("aaa");
         }

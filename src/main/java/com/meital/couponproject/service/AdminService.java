@@ -20,7 +20,7 @@ public class AdminService {
     private final CustomerRepository customerRepository;
 
     //company service
-    public void createCompany(final Company company) throws ApplicationException {
+    public Company createCompany(final Company company) throws ApplicationException {
         if (companyRepository.existsByNameIgnoreCase(company.getName())) {
             throw new ApplicationException(COMPANY_NAME_ALREADY_EXISTS);
         }
@@ -28,6 +28,7 @@ public class AdminService {
             throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
         companyRepository.save(company);
+        return company;
     }
 
     public void updateCompany(final long id) throws ApplicationException {

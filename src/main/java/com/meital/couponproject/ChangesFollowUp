@@ -29,7 +29,9 @@ Done:
     7.Service-
         A.Company Service - created coupon method
         B.Admin Service-company and customer crud methods.
-    8.Application Exception- Works on web design.
+    8.Controller-
+        A.adminController-company and customer crud methods.
+    9.Application Exception- Works on web design.
 
 
 
