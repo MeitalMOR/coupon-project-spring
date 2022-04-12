@@ -10,6 +10,7 @@ public enum ErrorType {
     WRONG_INPUT(602, "Wrong input"),
     EMAIL_ALREADY_EXISTS(603, "Email already exists"),
     COMPANY_NAME_ALREADY_EXISTS(603, "Company name already exists"),
+    COUPON_ALREADY_EXISTS(603, "Coupon already exists"),
     OUT_OF_STOCK_OR_EXPIRED(605, "Out of stock or expired"),
     CANNOT_PARSE_DATE(602, "Cannot parse date"),
     START_DATE_BIGGER_THAN_END_DATE(605, "Start date bigger than end date"),
