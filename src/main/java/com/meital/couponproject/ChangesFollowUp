@@ -25,7 +25,7 @@ Done:
             *exists By Title
             *exist by id
             *find By CompanyId
-            *find By CompanyId And Category
+            *find By CompanyId And Category.
     7.Service-
         A.Company Service - created coupon method
         B.Admin Service-company and customer crud methods.
