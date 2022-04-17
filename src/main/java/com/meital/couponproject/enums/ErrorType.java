@@ -11,11 +11,13 @@ public enum ErrorType {
     EMAIL_ALREADY_EXISTS(603, "Email already exists"),
     COMPANY_NAME_ALREADY_EXISTS(603, "Company name already exists"),
     COUPON_ALREADY_EXISTS(603, "Coupon already exists"),
+    //להפריד בין out of stock ו expired
     OUT_OF_STOCK_OR_EXPIRED(605, "Out of stock or expired"),
     CANNOT_PARSE_DATE(602, "Cannot parse date"),
     START_DATE_BIGGER_THAN_END_DATE(605, "Start date bigger than end date"),
     DB_ERROR(606, "Database error"),
     DATA_NOT_FOUND(607, "Data not found"),
+    //לבדוק אופציה להוספת שגיאות של קופון לא קיים וחברה לא קיימת
     HACKING_ATTEMPT(800, "Hacking attempt detected");
 
     @Getter

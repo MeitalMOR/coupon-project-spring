@@ -22,5 +22,7 @@ public class Purchase {
 
     @ManyToOne
     private Coupon coupon;
+
+
 }
 

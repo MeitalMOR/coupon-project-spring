@@ -1,10 +1,10 @@
 To Do List:
 
-    1. Thread: CouponExpirationDailyJob - fix the run method- add the logics classes.
-    2. LoginManager
-    3. Tests
-    4. add to string method to entities
-    5. need to add an update methods to the service
+    Admin Service
+    Thread: CouponExpirationDailyJob - fix the run method- add the logics classes.
+    Tests
+    Think about application Error type
+
 
 
 Done:
@@ -26,12 +26,18 @@ Done:
             *exist by id
             *find By CompanyId
             *find By CompanyId And Category.
+            *find By CompanyId And Max Price
     7.Service-
-        A.Company Service - created coupon method
+        A.Company Service - done
         B.Admin Service-company and customer crud methods.
-    8.Controller-
-        A.adminController-company and customer crud methods.
-    9.Application Exception- Works on web design.
+    17.04.22 -
+    company service - done
+    * fix update and delete methods at company service
+    * add to company service: get all coupons, get all coupons by category, get all coupons by max price, read company.
+    * add to coupon repository - findByCompanyIdAndPriceLessThan method
+    customer service - done
+    * methods - purchase coupon, find all customer coupons, find customer coupons by category, find customer coupons by max price, read customer
+    * add to purchase repository - find Coupons By CustomerId And Category, find Coupons By CustomerId And Price LessThan max price
 
 
 

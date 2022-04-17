@@ -18,4 +18,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
     List<Coupon> findByCompanyIdAndCategory(Long companyId, CouponCategory couponCategory);
 
+    List<Coupon> findByCompanyIdAndPriceLessThan(Long companyId, Double price);
+
+    List<Coupon> findByCompanyIdAndTitle(Long companyId, String title);
+
 }
