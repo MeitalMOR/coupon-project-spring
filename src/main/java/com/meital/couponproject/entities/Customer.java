@@ -3,6 +3,7 @@ package com.meital.couponproject.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -29,5 +30,13 @@ public class Customer {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "purchases",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "coupon_id")
+    )
+    private List<Coupon> coupons;
 
 }

@@ -6,15 +6,13 @@ import com.meital.couponproject.enums.CouponCategory;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repositories.CompanyRepository;
 import com.meital.couponproject.repositories.CouponRepository;
-import com.meital.couponproject.repositories.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.meital.couponproject.enums.ErrorType.COUPON_ALREADY_EXISTS;
-import static com.meital.couponproject.enums.ErrorType.DATA_NOT_FOUND;
+import static com.meital.couponproject.enums.ErrorType.*;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +20,9 @@ public class CompanyService {
 
     private final CouponRepository couponRepository;
     private final CompanyRepository companyRepository;
-    private final PurchaseRepository purchaseRepository;
 
-    public Coupon create(final Coupon coupon) throws ApplicationException {
+
+    public void create(final Coupon coupon) throws ApplicationException {
         if (couponRepository.existsByTitleIgnoreCase(coupon.getTitle())) {
             throw new ApplicationException(COUPON_ALREADY_EXISTS);
         }
@@ -34,17 +32,13 @@ public class CompanyService {
         }
 
         couponRepository.save(coupon);
-        return coupon;
     }
+
 
     public Coupon update(final Coupon coupon) throws ApplicationException {
 
         if (!couponRepository.existsById(coupon.getId())) {
             throw new ApplicationException(DATA_NOT_FOUND);
-        }
-
-        if (couponRepository.existsByTitleIgnoreCase(coupon.getTitle())) {
-            throw new ApplicationException(COUPON_ALREADY_EXISTS);
         }
 
         couponRepository.saveAndFlush(coupon);
@@ -57,8 +51,6 @@ public class CompanyService {
         if (couponOpt.isEmpty()) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
-
-        purchaseRepository.deletePurchaseByCouponId(couponId);
         couponRepository.deleteById(couponId);
 
         System.out.println("Coupon" + couponId + " deleted successfully");
@@ -67,7 +59,7 @@ public class CompanyService {
     public List<Coupon> getCompanyCoupons(final long companyId) throws ApplicationException {
 
         if (!companyRepository.existsById(companyId)) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
         }
 
         List<Coupon> coupons = couponRepository.findByCompanyId(companyId);
@@ -82,22 +74,22 @@ public class CompanyService {
     public List<Coupon> getCompanyCouponsByCategory(final long companyId, final CouponCategory category) throws ApplicationException {
 
         if (!companyRepository.existsById(companyId)) {
+            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
+        }
+
+        List<Coupon> Coupons = couponRepository.findByCompanyIdAndCategory(companyId, category);
+
+        if (Coupons.isEmpty()) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
 
-        List<Coupon> categoryCoupons = couponRepository.findByCompanyIdAndCategory(companyId, category);
-
-        if (categoryCoupons.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-
-        return categoryCoupons;
+        return Coupons;
     }
 
-    public List<Coupon> getCompanyCouponsByMaxPrice(final long companyId, final Double maxPrice) throws ApplicationException {
+    public List<Coupon> getCompanyCouponsByMaxPrice (final long companyId, final double maxPrice) throws ApplicationException {
 
         if (!companyRepository.existsById(companyId)) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
         }
 
         List<Coupon> lowerThanMaxPriceCoupons = couponRepository.findByCompanyIdAndPriceLessThan(companyId, maxPrice);
@@ -115,7 +107,7 @@ public class CompanyService {
         Optional<Company> companyOpt = companyRepository.findById(companyId);
 
         if (companyOpt.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
         }
 
         return companyOpt;

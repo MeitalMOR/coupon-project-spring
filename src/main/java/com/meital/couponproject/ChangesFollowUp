@@ -1,44 +1,27 @@
 To Do List:
 
-    Admin Service
+
     Thread: CouponExpirationDailyJob - fix the run method- add the logics classes.
     Tests
-    Think about application Error type
 
 
+    19.04.22 -
+    *Application-
+        A.i were made tests methods.
 
-Done:
-    1. entities
-    2. enums-ErrorType,UserType
-    3. Adding Purchase entity class
-    4. Constants package+ constants class.
-    5. Repositories - company, customer, coupon, purchase.
-    6. Repositories method testing -
-        A. company repository -
-            *exist by email and password
-            *exist by id
-            *exist by name
-        B. customer repository -
-            *exist by email and password
-            *exist by id
-        c. coupon repository -
-            *exists By Title
-            *exist by id
-            *find By CompanyId
-            *find By CompanyId And Category.
-            *find By CompanyId And Max Price
-    7.Service-
-        A.Company Service - done
-        B.Admin Service-company and customer crud methods.
-    17.04.22 -
-    company service - done
-    * fix update and delete methods at company service
-    * add to company service: get all coupons, get all coupons by category, get all coupons by max price, read company.
-    * add to coupon repository - findByCompanyIdAndPriceLessThan method
-    customer service - done
-    * methods - purchase coupon, find all customer coupons, find customer coupons by category, find customer coupons by max price, read customer
-    * add to purchase repository - find Coupons By CustomerId And Category, find Coupons By CustomerId And Price LessThan max price
+    *Purchases-
+        A.i were changed the join table in customer and coupon.
+        B.the purchase methods are in coupon repository.
+        C.the methods are not worked- need to fix them.
+        D.deleted the unnecessary methods(Because of the change of purchase entity).
 
+    *ErrorType-
+        A.outOfStock and has expired were separated.
+        B.add COMPANY_IS_NOT_EXISTS error.
+        C.all errors are arranged in ascending order of internalErrorCode.
 
+    *Company service-
+        A.all the methods were checked and worked.
 
-
+    *Customer service-
+        A. need to fix the changes in the methods (change the purchase repository there).

@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "coupons")
@@ -47,5 +48,13 @@ public class Coupon {
 
     @Column(name = "image")
     private String image;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "purchases",
+            joinColumns = @JoinColumn(name = "coupon_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+    private List<Customer> customers;
 }
 
