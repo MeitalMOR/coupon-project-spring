@@ -16,7 +16,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class CouponProjectSpringApplication {
@@ -36,7 +39,7 @@ public class CouponProjectSpringApplication {
                 password("12345")
                 .build();
 
-        Coupon coupon = Coupon.builder()
+        Coupon coupon = Coupon.builder().id(1L)
                 .companyId(1L).category(CouponCategory.ELECTRICITY)
                 .title("tv").description("tv1")
                 .startDate(LocalDate.of(2022, 4, 21))
@@ -47,9 +50,11 @@ public class CouponProjectSpringApplication {
                 .build();
 
         CompanyRepository companyRepository = ctx.getBean(CompanyRepository.class);
+        CustomerService customerService = ctx.getBean(CustomerService.class);
         AdminService adminService = ctx.getBean(AdminService.class);
 //        //create company test
-//        adminService.createCompany(company);
+
+
 //        System.out.println(companyRepository.existsByNameIgnoreCase("Fox"));
 
 
@@ -85,6 +90,47 @@ public class CouponProjectSpringApplication {
 
 
 //        CustomerService customerService = ctx.getBean(CustomerService.class);
+        //couponRepository.save(coupon);
+        //System.out.println(couponRepository.findByCompanyIdAndPriceLessThan(1L,3000.0));
+        //adminService.updateCustomer(Customer.builder().id(1L).firstName("roniii").lastName("roniii").email("ron@gmail.com").password("14789").build());
+        //System.out.println(adminService.getCustomer(1L));
+        Coupon coupon1 = Coupon.builder().id(1L).companyId(1L).category(CouponCategory.FOOD).title("japanika").description("sushi plate")
+                .startDate(LocalDate.of(2022,4,29)).endDate(LocalDate.of(2022,4,30)).amount(25).price(250.0).image("www.japanika").build();
+
+        Coupon coupon2 = Coupon.builder().id(2L).companyId(1L).category(CouponCategory.HOME_DECOR).title("table").description("black table")
+                .startDate(LocalDate.of(2022,4,29)).endDate(LocalDate.of(2022,4,30)).amount(5).price(150.0).image("www.home").build();
+
+        Coupon coupon3 = Coupon.builder().id(3L).companyId(1L).category(CouponCategory.FOOD).title("aroma").description("aroma toast")
+                .startDate(LocalDate.of(2022,4,29)).endDate(LocalDate.of(2022,4,30)).amount(12).price(25.0).image("www.aroma").build();
+
+        //couponRepository.save(coupon1);
+        //couponRepository.save(coupon2);
+        //couponRepository.save(coupon3);
+        //customerService.purchaseCoupon(1L,coupon2);
+        //customerService.purchaseCoupon(1L,coupon3);
+
+
+        //List<Coupon> coupons = couponRepository.findByCustomers_Id(1L);
+        //System.out.println(coupons);
+        //adminService.createCompany(company);
+        //adminService.addNewCustomer(customer);
+        //customerService.purchaseCoupon(1L,coupon2);
+        //customerService.purchaseCoupon(1L,coupon3);
+        //System.out.println(couponRepository.allCouponsPurchases(1L));
+
+        System.out.println(customerService.getCustomerCoupons(1L));
+
+
+
+
+
+
+
+        //companyService.createCoupon(coupon1);
+
+
+
+
     }
 }
 

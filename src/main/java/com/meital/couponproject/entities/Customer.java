@@ -3,6 +3,8 @@ package com.meital.couponproject.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,12 +33,12 @@ public class Customer {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JoinTable(
             name = "purchases",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "coupon_id")
     )
-    private List<Coupon> coupons;
+    private List<Coupon> coupons = new ArrayList<>();
 
 }

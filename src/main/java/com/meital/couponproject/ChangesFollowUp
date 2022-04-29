@@ -3,6 +3,9 @@ To Do List:
 
     Thread: CouponExpirationDailyJob - fix the run method- add the logics classes.
     Tests
+    log4j
+    spring banner
+
 
 
     19.04.22 -
@@ -25,3 +28,10 @@ To Do List:
 
     *Customer service-
         A. need to fix the changes in the methods (change the purchase repository there).
+
+    29.04.22
+    *check company service + finished admin service
+    *customer service - purchase method and get coupons by customer id we need to check how to convert long<List> to
+    coupon<List>
+    *customer repo - added query to get coupons by customer id. the query work
+

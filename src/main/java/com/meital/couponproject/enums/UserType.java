@@ -2,7 +2,8 @@ package com.meital.couponproject.enums;
 
 public enum UserType {
     CUSTOMER("Customer"),
-    COMPANY("Company");
+    COMPANY("Company"),
+    ADMIN("Admin");
 
     String userTypeName;
 

@@ -2,6 +2,8 @@ package com.meital.couponproject.entities;
 
 import com.meital.couponproject.enums.CouponCategory;
 import lombok.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -49,12 +51,13 @@ public class Coupon {
     @Column(name = "image")
     private String image;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "purchases",
             joinColumns = @JoinColumn(name = "coupon_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id")
     )
     private List<Customer> customers;
+
 }
 

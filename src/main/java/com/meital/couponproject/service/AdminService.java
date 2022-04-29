@@ -1,6 +1,7 @@
 package com.meital.couponproject.service;
 
 import com.meital.couponproject.entities.Company;
+import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.entities.Customer;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repositories.CompanyRepository;
@@ -16,94 +17,151 @@ import static com.meital.couponproject.enums.ErrorType.*;
 @Service
 @RequiredArgsConstructor
 public class AdminService {
+
     private final CompanyRepository companyRepository;
     private final CustomerRepository customerRepository;
 
-    //company service
+    //company
+    //--------------------------------create new company --------------------------
     public Company createCompany(final Company company) throws ApplicationException {
+
+        //check if company exists by name
         if (companyRepository.existsByNameIgnoreCase(company.getName())) {
             throw new ApplicationException(COMPANY_NAME_ALREADY_EXISTS);
         }
+
+        //check if company exists by email
         if (companyRepository.existsByEmail(company.getEmail())) {
             throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
+
+        //create new company
         companyRepository.save(company);
         return company;
     }
 
-    public void updateCompany(final long id) throws ApplicationException {
-        String emailToUpdate = "company@gmail.com";
-        Company company = companyRepository.findById(id).orElse(null);
-        if (company == null) {
+    //--------------------------------update company -------------------------------
+    public Company updateCompany(final Company company) throws ApplicationException {
+
+        //check if company exists by id
+        if (!companyRepository.existsById(company.getId())) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
-        company.setEmail(emailToUpdate);
-        companyRepository.save(company);
+
+        //update company
+        companyRepository.saveAndFlush(company);
+        return company;
     }
 
+    //----------------------------------delete company -------------------------------
+    public void deleteCompany(final long companyId) throws ApplicationException {
 
-    public void deleteCompany(final long id) throws ApplicationException {
-        if (!companyRepository.existsById(id)) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-        companyRepository.deleteById(id);
-    }
+        //find company by id using Optional
+        Optional<Company> companyOpt = companyRepository.findById(companyId);
 
-    public Optional<Company> getCompany(final long id) throws ApplicationException {
-        Optional<Company> companyOpt = companyRepository.findById(id);
         if (companyOpt.isEmpty()) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
-        return companyOpt;
+
+        //delete company
+        companyRepository.deleteById(companyId);
+
+        System.out.println("Company" + companyId + " deleted successfully");
     }
 
+    //------------------------------get all companies ----------------------------------
     public List<Company> getAllCompanies() throws ApplicationException {
+
+        //find all companies
         List<Company> companies = companyRepository.findAll();
+
         if (companies.isEmpty()) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
+
         return companies;
     }
 
-    //customer service
-    public void createCustomer(final Customer customer) throws ApplicationException {
+    //---------------------------------get company ---------------------------------
+    public Optional<Company> getCompany(final long companyId) throws ApplicationException {
+
+        //find company by id using Optional
+        Optional<Company> companyOpt = companyRepository.findById(companyId);
+
+        if (companyOpt.isEmpty()) {
+            throw new ApplicationException(DATA_NOT_FOUND);
+        }
+
+        return companyOpt;
+    }
+
+    //customer
+    //------------------------------------create new company -----------------------------
+    public void addNewCustomer(final Customer customer) throws ApplicationException {
+
+        //check if customer exist by email
         if (customerRepository.existsByEmail(customer.getEmail())) {
             throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
+
+        //create new customer
         customerRepository.save(customer);
     }
 
-    public void updateCustomer(final long id) throws ApplicationException {
-        String emailToUpdate = "customer@gmail.com";
-        Customer customer = customerRepository.findById(id).orElse(null);
-        if (customer == null) {
+    //--------------------------------update customer -----------------------------------
+    public Customer updateCustomer(final Customer customer) throws ApplicationException {
+
+        //check if customer exists by id
+        if (!customerRepository.existsById(customer.getId())) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
-        customer.setEmail(emailToUpdate);
-        customerRepository.save(customer);
+
+        //update customer
+        customerRepository.saveAndFlush(customer);
+        return customer;
     }
 
-    public void deleteCustomer(final long id) throws ApplicationException {
-        if (!customerRepository.existsById(id)) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-        customerRepository.deleteById(id);
-    }
+    //---------------------------------delete customer --------------------------------------
+    public void deleteCustomer(final long customerId) throws ApplicationException {
 
-    public Optional<Customer> getCustomer(final long id) throws ApplicationException {
-        Optional<Customer> customerOpt = customerRepository.findById(id);
+        //find customer by id using Optional
+        Optional<Customer> customerOpt = customerRepository.findById(customerId);
+
         if (customerOpt.isEmpty()) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
-        return customerOpt;
+
+        //delete customer
+        companyRepository.deleteById(customerId);
+
+        System.out.println("Customer" + customerId + " deleted successfully");
     }
 
+    //--------------------------------get all customers -------------------------------
     public List<Customer> getAllCustomers() throws ApplicationException {
+
+        //find all customers
         List<Customer> customers = customerRepository.findAll();
+
         if (customers.isEmpty()) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
+
         return customers;
     }
+
+    //------------------------------get one customer by ID ----------------------------
+    public Optional<Customer> getCustomer(final long customerId) throws ApplicationException {
+
+        //find customer by id using Optional
+        Optional<Customer> customerOpt = customerRepository.findById(customerId);
+
+        if (customerOpt.isEmpty()) {
+            throw new ApplicationException(DATA_NOT_FOUND);
+        }
+
+        return customerOpt;
+    }
+
 }
 

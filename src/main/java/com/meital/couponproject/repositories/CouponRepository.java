@@ -3,8 +3,12 @@ package com.meital.couponproject.repositories;
 import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.enums.CouponCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,7 +26,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
     //Purchase functions
 
-//    List<Coupon> findCouponsByCustomerId(Long customerId);
+    //@Query(value = "SELECT * FROM customer_vs_coupons WHERE customer_id=:customerId", nativeQuery = true)
+    //List<Long> allCouponsPurchases(@Param("customerId") Long customerId);
 //
 //    List<Coupon> findCouponsByCustomerIdAndCategory(Long customerId, CouponCategory category);
 //
