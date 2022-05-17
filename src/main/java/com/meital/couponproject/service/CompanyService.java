@@ -69,6 +69,17 @@ public class CompanyService {
     }
 
     //-----------------------------get all  company coupons ---------------------------
+    public Optional<Coupon> getCoupon(final long couponId) throws ApplicationException {
+        Optional<Coupon> couponOpt = couponRepository.findById(couponId);
+
+        if (couponOpt.isEmpty()) {
+            throw new ApplicationException(DATA_NOT_FOUND);
+        }
+        return couponOpt;
+    }
+
+
+    //-----------------------------get all  company coupons ---------------------------
     public List<Coupon> getCompanyCoupons(final long companyId) throws ApplicationException {
 
         //check if the company exist

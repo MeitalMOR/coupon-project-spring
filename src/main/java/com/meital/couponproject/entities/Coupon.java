@@ -2,8 +2,6 @@ package com.meital.couponproject.entities;
 
 import com.meital.couponproject.enums.CouponCategory;
 import lombok.*;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,7 +12,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Data
 public class Coupon {
 
@@ -59,5 +56,20 @@ public class Coupon {
     )
     private List<Customer> customers;
 
+    @Override
+    public String toString() {
+        return "Coupon{" +
+                "id=" + id +
+                ", companyId=" + companyId +
+                ", category=" + category +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", amount=" + amount +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }
 

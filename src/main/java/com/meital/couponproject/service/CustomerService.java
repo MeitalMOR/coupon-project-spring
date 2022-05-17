@@ -8,10 +8,7 @@ import com.meital.couponproject.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,18 +23,22 @@ public class CustomerService {
 
 
     //------------------------------------purchase coupon---------------------------------
-    @Transactional
+
     public Coupon purchaseCoupon(Long customerId, final Coupon coupon) throws ApplicationException {
 
-        Customer customer = customerRepository.getById(customerId);
+        Optional<Customer> customer = customerRepository.findById(customerId);
 
-        //if coupon doesn't exist, and throw exception
+        if (customer.isEmpty()) {
+            throw new ApplicationException(DATA_NOT_FOUND);
+        }
+
+        //if coupon doesn't exist throw exception
         if (!couponRepository.existsById(coupon.getId())) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
 
         //check if coupon is out of stock
-        if (couponRepository.findById(coupon.getId()).get().getAmount() == 0) {
+        if (coupon.getAmount() == 0) {
             throw new ApplicationException(COUPON_OUT_OF_STOCK);
         }
 
@@ -48,14 +49,13 @@ public class CustomerService {
         //update coupon amount
         coupon.setAmount(coupon.getAmount() - 1);
 
-        //add coupon to customer list of coupons
-        List<Coupon> couponList = customer.getCoupons();
-        couponList.add(coupon);
-
-        customer.setCoupons(couponList);
-
         //update the coupon at database
         couponRepository.saveAndFlush(coupon);
+
+        //add coupon to customer list of coupons
+        customer.get().getCoupons().add(coupon);
+        customerRepository.save(customer.get());
+
 
         System.out.println("Purchase succeeded");
 
@@ -63,21 +63,14 @@ public class CustomerService {
     }
 
     //---------------------------------get all coupons by customer id----------------------
-    @Transactional
-    public List<Long> getCustomerCoupons(Long customerId) throws ApplicationException {
 
-        if (!customerRepository.existsById(customerId)) {
+    public List<Coupon> getCustomerCoupons(Long customerId) throws ApplicationException {
+
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isEmpty()) {
             throw new ApplicationException(DATA_NOT_FOUND);
         }
-
-        List<Long> couponsIdPurchasedByCustomer = customerRepository.getCustomerCouponsId(customerId);
-
-        if (couponsIdPurchasedByCustomer.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-
-        return couponsIdPurchasedByCustomer;
-        //מחזיר רק זיהוי של הקופון ולא רשימת קופונים, נותן שגיאה כשמנסים להדפיס רשימת קופונים
+        return customer.get().getCoupons();
     }
 
 //

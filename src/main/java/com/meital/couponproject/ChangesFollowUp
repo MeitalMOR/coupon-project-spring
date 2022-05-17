@@ -8,30 +8,17 @@ To Do List:
 
 
 
-    19.04.22 -
-    *Application-
-        A.i were made tests methods.
+    17/05/2022-
 
-    *Purchases-
-        A.i were changed the join table in customer and coupon.
-        B.the purchase methods are in coupon repository.
-        C.the methods are not worked- need to fix them.
-        D.deleted the unnecessary methods(Because of the change of purchase entity).
+    Entities-
+    customer,coupon: changed the ToString method,it will not print them with the lists in each of them.
 
-    *ErrorType-
-        A.outOfStock and has expired were separated.
-        B.add COMPANY_IS_NOT_EXISTS error.
-        C.all errors are arranged in ascending order of internalErrorCode.
+    Repo-
+    just moved the methods to couponRepo from customerRepo.
 
-    *Company service-
-        A.all the methods were checked and worked.
+    Service-
+    1.Added a method of getCoupon in Company service.
+    2.Fixed the method: purchaseCoupon, getCustomerCoupons.
 
-    *Customer service-
-        A. need to fix the changes in the methods (change the purchase repository there).
-
-    29.04.22
-    *check company service + finished admin service
-    *customer service - purchase method and get coupons by customer id we need to check how to convert long<List> to
-    coupon<List>
-    *customer repo - added query to get coupons by customer id. the query work
+    We need to focus after the test in the tests classes, any  one of us will take a service and will build to it a test.
 

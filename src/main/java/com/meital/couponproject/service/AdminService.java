@@ -1,7 +1,6 @@
 package com.meital.couponproject.service;
 
 import com.meital.couponproject.entities.Company;
-import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.entities.Customer;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repositories.CompanyRepository;
