@@ -96,7 +96,7 @@ public class AdminService {
 
     //customer
     //------------------------------------create new company -----------------------------
-    public void addNewCustomer(final Customer customer) throws ApplicationException {
+    public void createCustomer(final Customer customer) throws ApplicationException {
 
         //check if customer exist by email
         if (customerRepository.existsByEmail(customer.getEmail())) {

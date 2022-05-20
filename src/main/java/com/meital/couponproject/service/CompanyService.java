@@ -68,7 +68,7 @@ public class CompanyService {
         System.out.println("Coupon" + couponId + " deleted successfully");
     }
 
-    //-----------------------------get all  company coupons ---------------------------
+    //-----------------------------get coupon ---------------------------
     public Optional<Coupon> getCoupon(final long couponId) throws ApplicationException {
         Optional<Coupon> couponOpt = couponRepository.findById(couponId);
 
@@ -79,7 +79,7 @@ public class CompanyService {
     }
 
 
-    //-----------------------------get all  company coupons ---------------------------
+    //-----------------------------get all company coupons ---------------------------
     public List<Coupon> getCompanyCoupons(final long companyId) throws ApplicationException {
 
         //check if the company exist
@@ -98,7 +98,7 @@ public class CompanyService {
         return coupons;
     }
 
-    //-----------------------------get all coupon for specific category -------------------
+    //-----------------------------get all coupons for specific category -------------------
     public List<Coupon> getCompanyCouponsByCategory(final long companyId, final CouponCategory category) throws ApplicationException {
 
         //check if the company exist
@@ -117,7 +117,7 @@ public class CompanyService {
         return Coupons;
     }
 
-    //-------------------get all coupon with lower price from maximum price --------------------
+    //-------------------get all coupons with lower price from maximum price --------------------
     public List<Coupon> getCompanyCouponsByMaxPrice(final long companyId, final double maxPrice) throws ApplicationException {
 
         //check if the company exist
@@ -137,7 +137,7 @@ public class CompanyService {
     }
 
 
-    //-------------------------get all company details ----------------------------------
+    //-------------------------get company details ----------------------------------
     public Optional<Company> getCompanyDetails(final long companyId) throws ApplicationException {
 
         //find company by id using Optional

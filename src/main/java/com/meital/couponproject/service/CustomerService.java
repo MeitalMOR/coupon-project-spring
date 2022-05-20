@@ -2,6 +2,7 @@ package com.meital.couponproject.service;
 
 import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.entities.Customer;
+import com.meital.couponproject.enums.CouponCategory;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repositories.CouponRepository;
 import com.meital.couponproject.repositories.CustomerRepository;
@@ -42,6 +43,7 @@ public class CustomerService {
             throw new ApplicationException(COUPON_OUT_OF_STOCK);
         }
 
+        //check if coupon is expired
         if (coupon.getEndDate().isBefore(LocalDate.now())) {
             throw new ApplicationException(COUPON_HAS_EXPIRED);
         }
@@ -54,7 +56,9 @@ public class CustomerService {
 
         //add coupon to customer list of coupons
         customer.get().getCoupons().add(coupon);
-        customerRepository.save(customer.get());
+
+        //update the customer at database
+        customerRepository.saveAndFlush(customer.get());
 
 
         System.out.println("Purchase succeeded");
@@ -73,14 +77,14 @@ public class CustomerService {
         return customer.get().getCoupons();
     }
 
+
+    //    public List<Coupon> getCustomerCouponsByCategory(Long customerId, CouponCategory category) throws ApplicationException {
 //
-//    public List<Coupon> getCustomerCouponsByCategory(Long customerID, CouponCategory category) throws ApplicationException {
-//
-//        if (!customerRepository.existsById(customerID)) {
+//        if (!customerRepository.existsById(customerId)) {
 //            throw new ApplicationException(DATA_NOT_FOUND);
 //        }
 //
-//        List<Coupon> customerCouponsByCategory = purchaseRepository.findCouponsByCustomerIdAndCategory(customerID, category);
+//        List<Coupon> customerCouponsByCategory = purchaseRepository.findCouponsByCustomerIdAndCategory(customerId, category);
 //
 //        if (customerCouponsByCategory.isEmpty()) {
 //            throw new ApplicationException(DATA_NOT_FOUND);
@@ -89,31 +93,31 @@ public class CustomerService {
 //        return customerCouponsByCategory;
 //    }
 //
-//    public List<Coupon> getCustomerCouponsByMaxPrice(Long customerID, Double price) throws ApplicationException {
-//
-//        if (!customerRepository.existsById(customerID)) {
-//            throw new ApplicationException(DATA_NOT_FOUND);
-//        }
-//
-//        List<Coupon> customerCouponsByMaxPrice = purchaseRepository.findCouponsByCustomerIdAndPriceLessThan(customerID, price);
-//
-//        if (customerCouponsByMaxPrice.isEmpty()) {
-//            throw new ApplicationException(DATA_NOT_FOUND);
-//        }
-//
-//        return customerCouponsByMaxPrice;
-//    }
-//
-//    public Optional<Customer> getCustomerDetails(final long customerID) throws ApplicationException {
-//
-//        Optional<Customer> customerOpt = customerRepository.findById(customerID);
-//
-//        if (customerOpt.isEmpty()) {
-//            throw new ApplicationException(DATA_NOT_FOUND);
-//        }
-//
-//        return customerOpt;
-//    }
+    public List<Coupon> getCustomerCouponsByMaxPrice(Long customerId, Double price) throws ApplicationException {
+
+        if (!customerRepository.existsById(customerId)) {
+            throw new ApplicationException(DATA_NOT_FOUND);
+        }
+
+        List<Coupon> customerCouponsByMaxPrice = couponRepository.findByCustomerIdAndPriceLessThan(customerId, price);
+
+        if (customerCouponsByMaxPrice.isEmpty()) {
+            throw new ApplicationException(DATA_NOT_FOUND);
+        }
+
+        return customerCouponsByMaxPrice;
+    }
+
+    public Optional<Customer> getCustomerDetails(final Long customerID) throws ApplicationException {
+
+        Optional<Customer> customerOpt = customerRepository.findById(customerID);
+
+        if (customerOpt.isEmpty()) {
+            throw new ApplicationException(DATA_NOT_FOUND);
+        }
+
+        return customerOpt;
+    }
 //
 
 }

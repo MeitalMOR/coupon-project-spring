@@ -131,6 +131,8 @@ public class CouponProjectSpringApplication {
         List<Coupon> coupons = customerService.getCustomerCoupons(1L);
 
         System.out.println(coupons);
+        System.out.println(customerService.getCustomerDetails(1L));
+        System.out.println(customerService.getCustomerCouponsByMaxPrice(1L,2555.0));
         //List<Coupon> coupons = couponRepository.findByCustomers_Id(1L);
         //System.out.println(coupons);
         //adminService.createCompany(company);
