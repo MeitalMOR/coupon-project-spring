@@ -27,4 +27,5 @@ public class CustomerConfig {
     public static String customer3Email = "customer3@gmail.com";
 
     public static String customer3Password = "33333";
+    //
 }

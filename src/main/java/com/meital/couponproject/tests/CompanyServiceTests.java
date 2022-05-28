@@ -76,6 +76,7 @@ public class CompanyServiceTests implements CommandLineRunner {
         if (c.get().getAmount() == 27) {
             log.info("\033[0;32m" + "Test 2 - update coupon - succeeded" + "\033[0m");
         }
+        //
     }
 
 
