@@ -4,9 +4,15 @@ fixed repo
 all service class are working with no errors
 added log4j to service classes and to thread
 added thread
+tests-
+admin service test - finished
+company service test - test create and update coupon (5 more test to finish)
+
 
 
 To Do List:
 
-    Tests
+    finish company tests
+    customer tests
     spring banner
+    readme markdown file for instructions

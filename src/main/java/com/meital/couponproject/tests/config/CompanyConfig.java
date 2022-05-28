@@ -14,4 +14,11 @@ public class CompanyConfig {
     public static String company2Email = "company2@gmail.com";
 
     public static String company2Password = "12345";
+
+    //---------------------Company 3 -------------------------------
+    public static String company3Name = "company3";
+
+    public static String company3Email = "company3@gmail.com";
+
+    public static String company3Password = "33333";
 }
