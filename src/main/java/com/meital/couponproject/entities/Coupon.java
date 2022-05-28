@@ -57,6 +57,7 @@ public class Coupon {
     private String image;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "purchases",
             joinColumns = @JoinColumn(name = "coupon_id"),
