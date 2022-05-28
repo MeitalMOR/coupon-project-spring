@@ -13,12 +13,12 @@ public enum ErrorType {
     COMPANY_NAME_ALREADY_EXISTS(603, "Company name already exists"),
     COUPON_ALREADY_EXISTS(603, "Coupon already exists"),
     COUPON_OUT_OF_STOCK(605, "Coupon out of stock"),
+    COUPON_DOES_NOT_EXIST(605, "Coupon doesn't exist"),
     COUPON_HAS_EXPIRED(605, "Coupon has expired"),
     START_DATE_BIGGER_THAN_END_DATE(605, "Start date bigger than end date"),
     DB_ERROR(606, "Database error"),
-    DATA_NOT_FOUND(607, "Data not found"),
-    COMPANY_IS_NOT_EXISTS(607, "Company isn't exists"),
-    //לבדוק אופציה להוספת שגיאות של קופון לא קיים וחברה לא קיימת
+    COMPANY_DOES_NOT_EXISTS(607, "Company doesn't exists"),
+    CUSTOMER_DOES_NOT_EXISTS(607, "Customer doesn't exists"),
     HACKING_ATTEMPT(800, "Hacking attempt detected");
 
     @Getter

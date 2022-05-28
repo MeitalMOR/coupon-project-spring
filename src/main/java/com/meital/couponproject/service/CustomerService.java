@@ -3,121 +3,131 @@ package com.meital.couponproject.service;
 import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.entities.Customer;
 import com.meital.couponproject.enums.CouponCategory;
+import com.meital.couponproject.enums.ErrorType;
 import com.meital.couponproject.exceptions.ApplicationException;
-import com.meital.couponproject.repositories.CouponRepository;
-import com.meital.couponproject.repositories.CustomerRepository;
+import com.meital.couponproject.repo.CouponRepo;
+import com.meital.couponproject.repo.CustomerRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static com.meital.couponproject.enums.ErrorType.*;
 
+
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
 
-    private final CouponRepository couponRepository;
-    private final CustomerRepository customerRepository;
+    private final CouponRepo couponRepo;
+    private final CustomerRepo customerRepo;
 
+    //-------------------------------------------purchase coupon ----------------------------
+    @Transactional
+    public Optional<Customer> purchaseCoupon(Long customerId, Long couponId) throws ApplicationException {
 
-    //------------------------------------purchase coupon---------------------------------
+        Optional<Customer> customerOpt = customerRepo.findById(customerId);
+        Coupon coupon = couponRepo.getById(couponId);
 
-    public Coupon purchaseCoupon(Long customerId, final Coupon coupon) throws ApplicationException {
-
-        Optional<Customer> customer = customerRepository.findById(customerId);
-
-        if (customer.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+        //check if customer exist
+        if (customerOpt.isEmpty()) {
+            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
         }
 
-        //if coupon doesn't exist throw exception
-        if (!couponRepository.existsById(coupon.getId())) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+        //check if coupon exist
+        if (!customerRepo.existsById(customerId)) {
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
         }
 
         //check if coupon is out of stock
-        if (coupon.getAmount() == 0) {
-            throw new ApplicationException(COUPON_OUT_OF_STOCK);
+        if (coupon.getAmount() <= 0) {
+            throw new ApplicationException(ErrorType.COUPON_OUT_OF_STOCK);
         }
 
         //check if coupon is expired
         if (coupon.getEndDate().isBefore(LocalDate.now())) {
-            throw new ApplicationException(COUPON_HAS_EXPIRED);
+            throw new ApplicationException(ErrorType.COUPON_HAS_EXPIRED);
         }
 
         //update coupon amount
         coupon.setAmount(coupon.getAmount() - 1);
 
-        //update the coupon at database
-        couponRepository.saveAndFlush(coupon);
+        List<Coupon> coupons = couponRepo.getCouponsByCustomersId(customerId);
+        //Add coupon to coupon list
+        coupons.add(coupon);
+        //set coupons to customer
+        customerOpt.get().setCoupons(coupons);
+        //purchase coupon
+        customerRepo.save(customerOpt.get());
 
-        //add coupon to customer list of coupons
-        customer.get().getCoupons().add(coupon);
-
-        //update the customer at database
-        customerRepository.saveAndFlush(customer.get());
-
-
-        System.out.println("Purchase succeeded");
-
-        return coupon;
-    }
-
-    //---------------------------------get all coupons by customer id----------------------
-
-    public List<Coupon> getCustomerCoupons(Long customerId) throws ApplicationException {
-
-        Optional<Customer> customer = customerRepository.findById(customerId);
-        if (customer.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-        return customer.get().getCoupons();
-    }
-
-
-    //    public List<Coupon> getCustomerCouponsByCategory(Long customerId, CouponCategory category) throws ApplicationException {
-//
-//        if (!customerRepository.existsById(customerId)) {
-//            throw new ApplicationException(DATA_NOT_FOUND);
-//        }
-//
-//        List<Coupon> customerCouponsByCategory = purchaseRepository.findCouponsByCustomerIdAndCategory(customerId, category);
-//
-//        if (customerCouponsByCategory.isEmpty()) {
-//            throw new ApplicationException(DATA_NOT_FOUND);
-//        }
-//
-//        return customerCouponsByCategory;
-//    }
-//
-    public List<Coupon> getCustomerCouponsByMaxPrice(Long customerId, Double price) throws ApplicationException {
-
-        if (!customerRepository.existsById(customerId)) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-
-        List<Coupon> customerCouponsByMaxPrice = couponRepository.findByCustomerIdAndPriceLessThan(customerId, price);
-
-        if (customerCouponsByMaxPrice.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-
-        return customerCouponsByMaxPrice;
-    }
-
-    public Optional<Customer> getCustomerDetails(final Long customerID) throws ApplicationException {
-
-        Optional<Customer> customerOpt = customerRepository.findById(customerID);
-
-        if (customerOpt.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
-        }
-
+        log.info("\033[0;33m" + "Succeeded purchase coupon" + "\033[0m");
         return customerOpt;
     }
-//
+
+    //-------------------------------------get customer coupons ----------------------------
+    @Transactional
+    public List<Coupon> getCustomerCoupons(Long customerId) throws ApplicationException {
+        if (!customerRepo.existsById(customerId)) {
+            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+        }
+        if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
+        }
+
+        log.info("\033[0;33m" + "Succeeded get list of customer coupons" + "\033[0m");
+        return couponRepo.getCouponsByCustomersId(customerId);
+    }
+
+    //-------------------------------------get customer coupons by coupon category ----------------------------
+    @Transactional
+    public List<Coupon> getCustomerCouponsByCategory(Long customerId, CouponCategory couponCategory) throws ApplicationException {
+        if (!customerRepo.existsById(customerId)) {
+            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+        }
+        if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
+        }
+
+        List<Coupon> couponsByCustomersIdAndCouponCategory = couponRepo.getCouponsByCustomersIdAndCategory(customerId, couponCategory);
+        log.info("\033[0;33m" + "Succeeded get list of customer coupons by coupon category" + "\033[0m");
+
+        return couponsByCustomersIdAndCouponCategory;
+    }
+
+    //-------------------------------------get customer coupons by cmax price ---------------------------
+    @Transactional
+    public List<Coupon> getCustomerCouponsByMaxPrice(Long customerId, Double maxPrice) throws ApplicationException {
+        if (!customerRepo.existsById(customerId)) {
+            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+        }
+        if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
+        }
+
+        List<Coupon> couponsByCustomersIdAndMaxPrice = couponRepo.getCouponsByCustomersIdAndPriceLessThan(customerId, maxPrice);
+        log.info("\033[0;33m" + "Succeeded get list of customer coupons by max price" + "\033[0m");
+
+        return couponsByCustomersIdAndMaxPrice;
+    }
+
+    //------------------------get customer details-------------------------------------
+    public Optional<Customer> getCustomer(final long customerId) throws ApplicationException {
+
+        //find customer by id using Optional
+        Optional<Customer> customerOpt = customerRepo.findById(customerId);
+
+        if (customerOpt.isEmpty()) {
+            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+        }
+
+        log.info("\033[0;33m" + "Succeeded get customer details" + "\033[0m");
+        return customerOpt;
+    }
+
 
 }

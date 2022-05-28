@@ -1,29 +1,12 @@
+28.05.22-
+fixed entities that cased errors
+fixed repo
+all service class are working with no errors
+added log4j to service classes and to thread
+added thread
+
+
 To Do List:
 
-
-    Thread: CouponExpirationDailyJob - fix the run method- add the logics classes.
     Tests
-    log4j
     spring banner
-
-
-
-    17/05/2022-
-
-    Entities-
-    customer,coupon: changed the ToString method,it will not print them with the lists in each of them.
-
-    Repo-
-    just moved the methods to couponRepo from customerRepo.
-
-    Service-
-    1.Added a method of getCoupon in Company service.
-    2.Fixed the method: purchaseCoupon, getCustomerCoupons.
-
-    We need to focus after the test in the tests classes, any  one of us will take a service and will build to it a test.
-
-
-check:
-customerService-
-getCustomerCoupon
-getCustomerDetails

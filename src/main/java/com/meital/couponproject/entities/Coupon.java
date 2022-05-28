@@ -1,7 +1,13 @@
 package com.meital.couponproject.entities;
 
+
 import com.meital.couponproject.enums.CouponCategory;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,8 +26,10 @@ public class Coupon {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "company_id", nullable = false)
-    private Long companyId;
+
+    @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Company company;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
@@ -48,7 +56,7 @@ public class Coupon {
     @Column(name = "image")
     private String image;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "purchases",
             joinColumns = @JoinColumn(name = "coupon_id"),
@@ -56,11 +64,12 @@ public class Coupon {
     )
     private List<Customer> customers;
 
+
     @Override
     public String toString() {
         return "Coupon{" +
                 "id=" + id +
-                ", companyId=" + companyId +
+                ", company=" + company +
                 ", category=" + category +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -71,5 +80,6 @@ public class Coupon {
                 ", image='" + image + '\'' +
                 '}';
     }
+
 }
 

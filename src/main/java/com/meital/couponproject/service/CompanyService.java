@@ -3,52 +3,55 @@ package com.meital.couponproject.service;
 import com.meital.couponproject.entities.Company;
 import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.enums.CouponCategory;
+import com.meital.couponproject.enums.ErrorType;
 import com.meital.couponproject.exceptions.ApplicationException;
-import com.meital.couponproject.repositories.CompanyRepository;
-import com.meital.couponproject.repositories.CouponRepository;
+import com.meital.couponproject.repo.CompanyRepo;
+import com.meital.couponproject.repo.CouponRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.meital.couponproject.enums.ErrorType.*;
-
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
 
-    private final CouponRepository couponRepository;
-    private final CompanyRepository companyRepository;
-
+    private final CouponRepo couponRepo;
+    private final CompanyRepo companyRepo;
 
     //--------------------------add new coupon to company------------------------------------
     public void createCoupon(final Coupon coupon) throws ApplicationException {
 
         //check if coupon exists by title
-        if (couponRepository.existsByTitleIgnoreCase(coupon.getTitle())) {
-            throw new ApplicationException(COUPON_ALREADY_EXISTS);
+        if (couponRepo.existsByTitleIgnoreCase(coupon.getTitle())) {
+            throw new ApplicationException(ErrorType.COUPON_ALREADY_EXISTS);
         }
 
         //check if the company in coupon exist
-        if (!companyRepository.existsById(coupon.getCompanyId())) {
-            throw new ApplicationException(COUPON_ALREADY_EXISTS);
+        if (!companyRepo.existsById(coupon.getCompany().getId())) {
+            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
         }
 
         //create the coupon
-        couponRepository.save(coupon);
+        couponRepo.save(coupon);
+        log.info("\033[0;33m" + "Coupon" + coupon.getId() + " created successfully" + "\033[0m");
     }
 
     //----------------------------------update coupon----------------------------------------
     public Coupon updateCoupon(final Coupon coupon) throws ApplicationException {
 
         //check if coupon exists by id
-        if (!couponRepository.existsById(coupon.getId())) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+        if (!couponRepo.existsById(coupon.getId())) {
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
         }
-
         //update coupon
-        couponRepository.saveAndFlush(coupon);
+        couponRepo.saveAndFlush(coupon);
+
+        log.info("\033[0;33m" + "Coupon" + coupon.getId() + " updated successfully" + "\033[0m");
+
         return coupon;
     }
 
@@ -56,45 +59,46 @@ public class CompanyService {
     public void deleteCoupon(final long couponId) throws ApplicationException {
 
         //find coupon by id using Optional
-        Optional<Coupon> couponOpt = couponRepository.findById(couponId);
+        Optional<Coupon> couponOpt = couponRepo.findById(couponId);
 
         if (couponOpt.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
         }
 
         //delete coupon
-        couponRepository.deleteById(couponId);
-
-        System.out.println("Coupon" + couponId + " deleted successfully");
+        couponRepo.deleteById(couponId);
+        log.info("\033[0;33m" + "Coupon" + couponId + " deleted successfully" + "\033[0m");
     }
 
     //-----------------------------get coupon ---------------------------
     public Optional<Coupon> getCoupon(final long couponId) throws ApplicationException {
-        Optional<Coupon> couponOpt = couponRepository.findById(couponId);
+        Optional<Coupon> couponOpt = couponRepo.findById(couponId);
 
         if (couponOpt.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
         }
+        log.info("\033[0;33m" + "Succeeded get coupon" + "\033[0m");
+
         return couponOpt;
     }
-
 
     //-----------------------------get all company coupons ---------------------------
     public List<Coupon> getCompanyCoupons(final long companyId) throws ApplicationException {
 
         //check if the company exist
-        if (!companyRepository.existsById(companyId)) {
-            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
+        if (!companyRepo.existsById(companyId)) {
+            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
         }
 
-        //find the coupon list by company id, using couponRepo method
-        List<Coupon> coupons = couponRepository.findByCompanyId(companyId);
+        //find coupon list by company id, using couponRepo method
+        List<Coupon> coupons = couponRepo.getCouponsByCompanyId(companyId);
 
         //if the company has no coupons throw exception
         if (coupons.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
         }
 
+        log.info("\033[0;33m" + "Succeeded get coupon list by company id" + "\033[0m");
         return coupons;
     }
 
@@ -102,18 +106,19 @@ public class CompanyService {
     public List<Coupon> getCompanyCouponsByCategory(final long companyId, final CouponCategory category) throws ApplicationException {
 
         //check if the company exist
-        if (!companyRepository.existsById(companyId)) {
-            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
+        if (!companyRepo.existsById(companyId)) {
+            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
         }
 
         //find the coupon list by company id and category, using couponRepo method
-        List<Coupon> Coupons = couponRepository.findByCompanyIdAndCategory(companyId, category);
+        List<Coupon> Coupons = couponRepo.findByCompanyIdAndCategory(companyId, category);
 
         //if the company has no coupons throw exception
         if (Coupons.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
         }
 
+        log.info("\033[0;33m" + "Succeeded get coupon list by company id and coupon category" + "\033[0m");
         return Coupons;
     }
 
@@ -121,32 +126,36 @@ public class CompanyService {
     public List<Coupon> getCompanyCouponsByMaxPrice(final long companyId, final double maxPrice) throws ApplicationException {
 
         //check if the company exist
-        if (!companyRepository.existsById(companyId)) {
-            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
+        if (!companyRepo.existsById(companyId)) {
+            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
         }
 
         //find the coupon list by company id and max price, using couponRepo method
-        List<Coupon> lowerThanMaxPriceCoupons = couponRepository.findByCompanyIdAndPriceLessThan(companyId, maxPrice);
+        List<Coupon> lowerThanMaxPriceCoupons = couponRepo.findByCompanyIdAndPriceLessThan(companyId, maxPrice);
 
         //if the company has no coupons throw exception
         if (lowerThanMaxPriceCoupons.isEmpty()) {
-            throw new ApplicationException(DATA_NOT_FOUND);
+            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
         }
 
+        log.info("\033[0;33m" + "Succeeded get coupon list by company id and max price" + "\033[0m");
         return lowerThanMaxPriceCoupons;
     }
-
 
     //-------------------------get company details ----------------------------------
     public Optional<Company> getCompanyDetails(final long companyId) throws ApplicationException {
 
         //find company by id using Optional
-        Optional<Company> companyOpt = companyRepository.findById(companyId);
+        Optional<Company> companyOpt = companyRepo.findById(companyId);
 
         if (companyOpt.isEmpty()) {
-            throw new ApplicationException(COMPANY_IS_NOT_EXISTS);
+            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
         }
 
+        log.info("\033[0;33m" + "Succeeded get company details" + "\033[0m");
         return companyOpt;
     }
+
 }
+
+

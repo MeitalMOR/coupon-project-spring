@@ -1,15 +1,20 @@
 package com.meital.couponproject.entities;
 
+
 import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "companies")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Data
 public class Company {
 
@@ -27,5 +32,17 @@ public class Company {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Transient
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<Coupon> coupons;
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
