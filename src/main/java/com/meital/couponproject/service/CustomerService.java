@@ -3,7 +3,6 @@ package com.meital.couponproject.service;
 import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.entities.Customer;
 import com.meital.couponproject.enums.CouponCategory;
-import com.meital.couponproject.enums.ErrorType;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repo.CouponRepo;
 import com.meital.couponproject.repo.CustomerRepo;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 import static com.meital.couponproject.enums.ErrorType.*;
 
-
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -29,29 +27,29 @@ public class CustomerService {
 
     //-------------------------------------------purchase coupon ----------------------------
     @Transactional
-    public Optional<Customer> purchaseCoupon(Long customerId, Long couponId) throws ApplicationException {
+    public  void purchaseCoupon(Long customerId, Long couponId) throws ApplicationException {
 
         Optional<Customer> customerOpt = customerRepo.findById(customerId);
         Coupon coupon = couponRepo.getById(couponId);
 
         //check if customer exist
         if (customerOpt.isEmpty()) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
         //check if coupon exist
         if (!customerRepo.existsById(customerId)) {
-            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
+            throw new ApplicationException(COUPON_DOES_NOT_EXIST);
         }
 
         //check if coupon is out of stock
         if (coupon.getAmount() <= 0) {
-            throw new ApplicationException(ErrorType.COUPON_OUT_OF_STOCK);
+            throw new ApplicationException(COUPON_OUT_OF_STOCK);
         }
 
         //check if coupon is expired
         if (coupon.getEndDate().isBefore(LocalDate.now())) {
-            throw new ApplicationException(ErrorType.COUPON_HAS_EXPIRED);
+            throw new ApplicationException(COUPON_HAS_EXPIRED);
         }
 
         //update coupon amount
@@ -66,17 +64,16 @@ public class CustomerService {
         customerRepo.save(customerOpt.get());
 
         log.info("\033[0;33m" + "Succeeded purchase coupon" + "\033[0m");
-        return customerOpt;
     }
 
     //-------------------------------------get customer coupons ----------------------------
     @Transactional
     public List<Coupon> getCustomerCoupons(Long customerId) throws ApplicationException {
         if (!customerRepo.existsById(customerId)) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
         if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
-            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
+            throw new ApplicationException(COUPON_DOES_NOT_EXIST);
         }
 
         log.info("\033[0;33m" + "Succeeded get list of customer coupons" + "\033[0m");
@@ -87,10 +84,10 @@ public class CustomerService {
     @Transactional
     public List<Coupon> getCustomerCouponsByCategory(Long customerId, CouponCategory couponCategory) throws ApplicationException {
         if (!customerRepo.existsById(customerId)) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
         if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
-            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
+            throw new ApplicationException(COUPON_DOES_NOT_EXIST);
         }
 
         List<Coupon> couponsByCustomersIdAndCouponCategory = couponRepo.getCouponsByCustomersIdAndCategory(customerId, couponCategory);
@@ -99,14 +96,14 @@ public class CustomerService {
         return couponsByCustomersIdAndCouponCategory;
     }
 
-    //-------------------------------------get customer coupons by cmax price ---------------------------
+    //-------------------------------------get customer coupons by max price ---------------------------
     @Transactional
     public List<Coupon> getCustomerCouponsByMaxPrice(Long customerId, Double maxPrice) throws ApplicationException {
         if (!customerRepo.existsById(customerId)) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
         if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
-            throw new ApplicationException(ErrorType.COUPON_DOES_NOT_EXIST);
+            throw new ApplicationException(COUPON_DOES_NOT_EXIST);
         }
 
         List<Coupon> couponsByCustomersIdAndMaxPrice = couponRepo.getCouponsByCustomersIdAndPriceLessThan(customerId, maxPrice);
@@ -116,13 +113,13 @@ public class CustomerService {
     }
 
     //------------------------get customer details-------------------------------------
-    public Optional<Customer> getCustomer(final long customerId) throws ApplicationException {
+    public Optional<Customer> getCustomerDetails(final long customerId) throws ApplicationException {
 
         //find customer by id using Optional
         Optional<Customer> customerOpt = customerRepo.findById(customerId);
 
         if (customerOpt.isEmpty()) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
         log.info("\033[0;33m" + "Succeeded get customer details" + "\033[0m");

@@ -7,11 +7,11 @@ import com.meital.couponproject.enums.CouponCategory;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repo.CompanyRepo;
 import com.meital.couponproject.repo.CouponRepo;
+import com.meital.couponproject.service.AdminService;
 import com.meital.couponproject.service.CompanyService;
 import com.meital.couponproject.tests.config.CompanyConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -25,33 +25,17 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Order(2)
-public class CompanyServiceTests implements CommandLineRunner {
+public class CompanyServiceTests {
 
+    private final AdminService adminService;
     private final CompanyService companyService;
     private final CompanyRepo companyRepo;
     private final CouponRepo couponRepo;
 
-
-    @Override
-    public void run(String... args) throws Exception {
-
-        log.info("\033[0;32m" + "Start Testing Company service..........." + "\033[0m");
-        testCreateCoupon();
-        testUpdateCoupon();
-        testDeleteCoupon();
-        testGetCouponDetails();
-        testGetAllCompanyCoupons();
-        testGetAllCompanyCouponsByCategory();
-
-        testGetAllCompanyCouponsByMaxPrice();
-
-
-    }
-
     //--------------------------------create new coupon test
     public void testCreateCoupon() throws ApplicationException {
 
-        Company company1 = companyRepo.save(Company.builder()
+        Company company1 = adminService.createCompany(Company.builder()
                 .name(CompanyConfig.company3Name)
                 .email(CompanyConfig.company3Email)
                 .password(CompanyConfig.company3Password).build());
@@ -65,7 +49,7 @@ public class CompanyServiceTests implements CommandLineRunner {
                         .price(396.0)
                         .image("www.spa.com").build());
 
-        if (couponRepo.existsById(3L)) {
+        if (couponRepo.existsById(1L)) {
             log.info("\033[0;32m" + "Test 1 - create new coupon - succeeded" + "\033[0m");
         }
     }
@@ -82,15 +66,15 @@ public class CompanyServiceTests implements CommandLineRunner {
 
         companyService.updateCoupon(couponToUpdate);
 
-        Optional<Coupon> c = couponRepo.findById(3L);
-        if (c.get().getAmount() == 27) {
+        Optional<Coupon> coupon = couponRepo.findById(3L);
+        if (coupon.get().getAmount() == 27) {
             log.info("\033[0;32m" + "Test 2 - update coupon - succeeded" + "\033[0m");
         }
     }
 
     //--------------------------------delete coupon test
     @Transactional
-    private void testDeleteCoupon() throws ApplicationException {
+    public void testDeleteCoupon() throws ApplicationException {
 
         companyService.deleteCoupon(3L);
 
@@ -101,9 +85,9 @@ public class CompanyServiceTests implements CommandLineRunner {
 
     //--------------------------------Test get coupon details
     @Transactional
-    private void testGetCouponDetails() throws ApplicationException {
+    public void testGetCouponDetails() throws ApplicationException {
 
-        Coupon coupon = couponRepo.save(
+        Coupon coupon = companyService.createCoupon(
                 Coupon.builder().company(companyRepo.getById(2L)).category(CouponCategory.THINGS_TO_DO_CHILDREN)
                         .title("coupon5").description("coupon5")
                         .startDate(LocalDate.of(2022, 7, 10))
@@ -119,7 +103,7 @@ public class CompanyServiceTests implements CommandLineRunner {
 
     //--------------------------------Test get company coupon list
     @Transactional
-    private void testGetAllCompanyCoupons() throws ApplicationException {
+    public void testGetAllCompanyCoupons() throws ApplicationException {
 
         List<Coupon> companyCoupons = companyService.getCompanyCoupons(2L);
 
@@ -130,7 +114,7 @@ public class CompanyServiceTests implements CommandLineRunner {
 
     //--------------------------------Test get company coupon list for category
     @Transactional
-    private void testGetAllCompanyCouponsByCategory() throws ApplicationException {
+    public void testGetAllCompanyCouponsByCategory() throws ApplicationException {
 
         List<Coupon> companyCouponsByCategory = companyService.getCompanyCouponsByCategory(2L, CouponCategory.THINGS_TO_DO_CHILDREN);
 
@@ -141,7 +125,7 @@ public class CompanyServiceTests implements CommandLineRunner {
 
     //--------------------------------Test get company coupon list by max price
     @Transactional
-    private void testGetAllCompanyCouponsByMaxPrice() throws ApplicationException {
+    public void testGetAllCompanyCouponsByMaxPrice() throws ApplicationException {
 
         List<Coupon> companyCouponsByMaxPrice = companyService.getCompanyCouponsByMaxPrice(2L, 400.0);
 

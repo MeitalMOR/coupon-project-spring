@@ -2,7 +2,6 @@ package com.meital.couponproject.service;
 
 import com.meital.couponproject.entities.Company;
 import com.meital.couponproject.entities.Customer;
-import com.meital.couponproject.enums.ErrorType;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.repo.CompanyRepo;
 import com.meital.couponproject.repo.CustomerRepo;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.meital.couponproject.enums.ErrorType.*;
 
 @Log4j2
 @Service
@@ -27,12 +28,12 @@ public class AdminService {
 
         //check if company exists by name
         if (companyRepo.existsByName(company.getName())) {
-            throw new ApplicationException(ErrorType.COMPANY_NAME_ALREADY_EXISTS);
+            throw new ApplicationException(COMPANY_NAME_ALREADY_EXISTS);
         }
 
         //check if company exists by email
         if (companyRepo.existsByEmail(company.getEmail())) {
-            throw new ApplicationException(ErrorType.EMAIL_ALREADY_EXISTS);
+            throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
 
         //create new company
@@ -47,7 +48,7 @@ public class AdminService {
 
         //check if company exists by id
         if (!companyRepo.existsById(company.getId())) {
-            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
+            throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
         }
 
         //update company
@@ -65,7 +66,7 @@ public class AdminService {
 
         //check if company exists
         if (companyOpt.isEmpty()) {
-            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
+            throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
         }
 
         //delete company
@@ -80,7 +81,7 @@ public class AdminService {
         List<Company> companies = companyRepo.findAll();
 
         if (companies.isEmpty()) {
-            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
+            throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
         }
 
         log.info("\033[0;33m" + "Succeeded get all companies list" + "\033[0m");
@@ -94,7 +95,7 @@ public class AdminService {
         Optional<Company> companyOpt = companyRepo.findById(companyId);
 
         if (companyOpt.isEmpty()) {
-            throw new ApplicationException(ErrorType.COMPANY_DOES_NOT_EXISTS);
+            throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
         }
 
         log.info("\033[0;33m" + "Succeeded get company details" + "\033[0m");
@@ -102,17 +103,19 @@ public class AdminService {
     }
 
     //Customer --------
-    //------------------------------------create new company -----------------------------
-    public void createCustomer(final Customer customer) throws ApplicationException {
+    //------------------------------------create new customer -----------------------------
+    public Customer createCustomer(final Customer customer) throws ApplicationException {
 
         //check if customer exist by email
         if (customerRepo.existsByEmail(customer.getEmail())) {
-            throw new ApplicationException(ErrorType.EMAIL_ALREADY_EXISTS);
+            throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
 
         //create new customer
         customerRepo.save(customer);
         log.info("\033[0;33m" + "Customer created successfully" + "\033[0m");
+
+        return customer;
     }
 
     //--------------------------------update customer -----------------------------------
@@ -120,7 +123,7 @@ public class AdminService {
 
         //check if customer exists by id
         if (!customerRepo.existsById(customer.getId())) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
         //update customer
@@ -137,7 +140,7 @@ public class AdminService {
         Optional<Customer> customerOpt = customerRepo.findById(customerId);
 
         if (customerOpt.isEmpty()) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
         //delete customer
@@ -153,7 +156,7 @@ public class AdminService {
         List<Customer> customers = customerRepo.findAll();
 
         if (customers.isEmpty()) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
         log.info("\033[0;33m" + "Succeeded get all customers list" + "\033[0m");
@@ -167,7 +170,7 @@ public class AdminService {
         Optional<Customer> customerOpt = customerRepo.findById(customerId);
 
         if (customerOpt.isEmpty()) {
-            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+            throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
         log.info("\033[0;33m" + "Succeeded get customer details" + "\033[0m");

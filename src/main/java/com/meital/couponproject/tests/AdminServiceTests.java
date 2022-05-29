@@ -15,7 +15,6 @@ import com.meital.couponproject.tests.config.CompanyConfig;
 import com.meital.couponproject.tests.config.CustomerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +27,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Order(1)
-public class AdminServiceTests implements CommandLineRunner {
+public class AdminServiceTests {
 
 
     private final AdminService adminService;
@@ -37,24 +36,10 @@ public class AdminServiceTests implements CommandLineRunner {
     private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;
 
-    @Override
-    public void run(String... args) throws Exception {
-        log.info("\033[0;34m" + "Start Testing Admin service..........." + "\033[0m");
-        testCreateCompany();
-        updateCompanyTest();
-        deleteCompanyTest();
-        testGetAllCompanies();
-        testGetCompanyDetails();
-        testCreateCustomer();
-        testUpdateCustomer();
-        testDeleteCustomer();
-        testGetAllCustomers();
-        testGetCustomerDetails();
-    }
 
     //--------------------------------create new company test
     @Transactional
-    private void testCreateCompany() throws ApplicationException {
+    public void testCreateCompany() throws ApplicationException {
 
         Company company = adminService.createCompany(Company.builder()
                 .name(CompanyConfig.company1Name)
@@ -68,7 +53,7 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------update company test
     @Transactional
-    private void updateCompanyTest() throws ApplicationException {
+    public void updateCompanyTest() throws ApplicationException {
 
         Company companyToUpdate = adminService.updateCompany(Company.builder()
                 .id(1L)
@@ -86,7 +71,7 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------delete company test
     @Transactional
-    private void deleteCompanyTest() throws ApplicationException {
+    public void deleteCompanyTest() throws ApplicationException {
         Customer customer = customerRepo.save(
                 Customer.builder()
                         .firstName(CustomerConfig.customer1FirstName)
@@ -113,7 +98,7 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------list of all companies test
     @Transactional
-    private void testGetAllCompanies() throws ApplicationException {
+    public void testGetAllCompanies() throws ApplicationException {
         Company company = adminService.createCompany(Company.builder()
                 .name(CompanyConfig.company1Name)
                 .email(CompanyConfig.company1Email)
@@ -132,7 +117,7 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------Test get company details
     @Transactional
-    private void testGetCompanyDetails() throws ApplicationException {
+    public void testGetCompanyDetails() throws ApplicationException {
 
         Coupon coupon = couponRepo.save(
                 Coupon.builder().company(companyRepo.getById(2L)).category(CouponCategory.FOOD)
@@ -153,25 +138,25 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------create new customer test
     @Transactional
-    private void testCreateCustomer() throws ApplicationException {
+    public void testCreateCustomer() throws ApplicationException {
 
-        Customer customer = customerRepo.save(
+        Customer customer = adminService.createCustomer(
                 Customer.builder()
                         .firstName(CustomerConfig.customer2FirstName)
                         .lastName(CustomerConfig.customer2LastName)
                         .email(CustomerConfig.customer2Email)
                         .password(CustomerConfig.customer2Password).build());
 
-        if (customer.getId() == 2L) {
+        if (customer.getId() == 1L) {
             log.info("\033[0;34m" + "Test 6 - create new customer - succeeded" + "\033[0m");
         }
     }
 
     //--------------------------------update customer test
     @Transactional
-    private void testUpdateCustomer() throws ApplicationException {
+    public void testUpdateCustomer() throws ApplicationException {
 
-        Customer customerToUpdate = customerRepo.save(
+        Customer customerToUpdate = adminService.updateCustomer(
                 Customer.builder()
                         .id(2L)
                         .firstName(CustomerConfig.customer2FirstName)
@@ -188,7 +173,7 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------delete customer test
     @Transactional
-    private void testDeleteCustomer() throws ApplicationException {
+    public void testDeleteCustomer() throws ApplicationException {
 
         customerService.purchaseCoupon(1L, 2L);
         adminService.deleteCustomer(1L);
@@ -200,8 +185,8 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------list of all customers test
     @Transactional
-    private void testGetAllCustomers() throws ApplicationException {
-        Customer customer = customerRepo.save(
+    public void testGetAllCustomers() throws ApplicationException {
+        Customer customer = adminService.createCustomer(
                 Customer.builder()
                         .firstName(CustomerConfig.customer3FirstName)
                         .lastName(CustomerConfig.customer3LastName)
@@ -216,7 +201,7 @@ public class AdminServiceTests implements CommandLineRunner {
 
     //--------------------------------Test get company details
     @Transactional
-    private void testGetCustomerDetails() throws ApplicationException {
+    public void testGetCustomerDetails() throws ApplicationException {
 
         Optional<Customer> customerOpt = adminService.getCustomer(2L);
 
@@ -224,6 +209,4 @@ public class AdminServiceTests implements CommandLineRunner {
             log.info("\033[0;34m" + "Test 10 - get customer details - succeeded" + "\033[0m");
         }
     }
-
-
 }
