@@ -15,8 +15,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+
 
 @Log4j2
 @Component
@@ -35,6 +38,13 @@ public class CompanyServiceTests implements CommandLineRunner {
         log.info("\033[0;32m" + "Start Testing Company service..........." + "\033[0m");
         testCreateCoupon();
         testUpdateCoupon();
+        testDeleteCoupon();
+        testGetCouponDetails();
+        testGetAllCompanyCoupons();
+        testGetAllCompanyCouponsByCategory();
+
+        testGetAllCompanyCouponsByMaxPrice();
+
 
     }
 
@@ -76,8 +86,68 @@ public class CompanyServiceTests implements CommandLineRunner {
         if (c.get().getAmount() == 27) {
             log.info("\033[0;32m" + "Test 2 - update coupon - succeeded" + "\033[0m");
         }
-        //
     }
 
+    //--------------------------------delete coupon test
+    @Transactional
+    private void testDeleteCoupon() throws ApplicationException {
+
+        companyService.deleteCoupon(3L);
+
+        if (!couponRepo.existsById(3L)) {
+            log.info("\033[0;32m" + "Test 3 - delete coupon - succeeded" + "\033[0m");
+        }
+    }
+
+    //--------------------------------Test get coupon details
+    @Transactional
+    private void testGetCouponDetails() throws ApplicationException {
+
+        Coupon coupon = couponRepo.save(
+                Coupon.builder().company(companyRepo.getById(2L)).category(CouponCategory.THINGS_TO_DO_CHILDREN)
+                        .title("coupon5").description("coupon5")
+                        .startDate(LocalDate.of(2022, 7, 10))
+                        .endDate(LocalDate.of(2022, 7, 30))
+                        .amount(65)
+                        .price(33.0)
+                        .image("www.children.com").build());
+
+        if (couponRepo.existsById(4L)) {
+            log.info("\033[0;32m" + "Test 4 - get coupon details - succeeded" + "\033[0m");
+        }
+    }
+
+    //--------------------------------Test get company coupon list
+    @Transactional
+    private void testGetAllCompanyCoupons() throws ApplicationException {
+
+        List<Coupon> companyCoupons = companyService.getCompanyCoupons(2L);
+
+        if (companyCoupons.size() == 2) {
+            log.info("\033[0;32m" + "Test 5 - get coupon list by company - succeeded" + "\033[0m");
+        }
+    }
+
+    //--------------------------------Test get company coupon list for category
+    @Transactional
+    private void testGetAllCompanyCouponsByCategory() throws ApplicationException {
+
+        List<Coupon> companyCouponsByCategory = companyService.getCompanyCouponsByCategory(2L, CouponCategory.THINGS_TO_DO_CHILDREN);
+
+        if (companyCouponsByCategory.size() == 1) {
+            log.info("\033[0;32m" + "Test 6 - get coupon list by company and category- succeeded" + "\033[0m");
+        }
+    }
+
+    //--------------------------------Test get company coupon list by max price
+    @Transactional
+    private void testGetAllCompanyCouponsByMaxPrice() throws ApplicationException {
+
+        List<Coupon> companyCouponsByMaxPrice = companyService.getCompanyCouponsByMaxPrice(2L, 400.0);
+
+        if (companyCouponsByMaxPrice.size() == 2) {
+            log.info("\033[0;32m" + "Test 7 - get coupon list by company id  and max price - succeeded" + "\033[0m");
+        }
+    }
 
 }
