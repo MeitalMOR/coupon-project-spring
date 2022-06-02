@@ -1,6 +1,6 @@
 <h1 style="text-align:center"> Coupon System - Spring</h1>
 
-<div style="text-align:center"><img  src= "./couponpic.png" /></div>.
+<div style="margin-left=50%"><img src= "couponpic.png" ></div>
 
 
 <!-- ABOUT THE PROJECT -->
