@@ -1,6 +1,6 @@
 <h1 style="text-align:center"> Coupon System - Spring</h1>
 
-<div style="text-align:center"><img  src= "C:\Users\meita\Desktop\Projects\coupon-project-spring-backend\coupon-project-springframework\src\main\java\com\meital\couponproject\couponpic.png" /></div>.
+<div style="text-align:center"><img  src= "./couponpic.png" /></div>.
 
 
 <!-- ABOUT THE PROJECT -->
