@@ -21,4 +21,11 @@ public class CompanyConfig {
     public static String company3Email = "company3@gmail.com";
 
     public static String company3Password = "33333";
+
+    //---------------------Company To Update -------------------------------
+
+    public static String companyToUpdateEmail = "companyToUpdate@gmail.com";
+
+    public static String companyToUpdatePassword = "44444";
+
 }

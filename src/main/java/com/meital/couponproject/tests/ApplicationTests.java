@@ -22,19 +22,18 @@ public class ApplicationTests implements CommandLineRunner {
         log.info("\033[0;34m" + "Start creates Testing..........." + "\033[0m");
 
         //--------------------------------Company Create Test
-        adminTests.testCreateCompany();
+        adminTests.testCreateCompanies();
 
         //--------------------------------Customer Create Test
-        adminTests.testCreateCustomer();
+        adminTests.testCreateCustomers();
 
         //--------------------------------Coupon Create Test
-        companyTests.testCreateCoupon();
+        companyTests.testCreateCoupons();
 
         log.info("\033[0;34m" + "Start purchase Testing..........." + "\033[0m");
 
         //--------------------------------Purchase Coupon Test
         customerTests.testPurchaseCoupon();
-
 
 
         log.info("\033[0;32m" + "Start Getters Testing..........." + "\033[0m");
@@ -43,7 +42,7 @@ public class ApplicationTests implements CommandLineRunner {
         adminTests.testGetCompanyDetails();
         adminTests.testGetAllCompanies();
 
-        //--------------------------------Customers Getters Tests
+//        //--------------------------------Customers Getters Tests
         adminTests.testGetCustomerDetails();
         customerTests.getCustomerCoupons();
         customerTests.getCustomerCouponsByCategory();

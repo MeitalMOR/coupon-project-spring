@@ -1,14 +1,9 @@
-29.05.22-
-customer tests
-spring banner
 
-
+all the were checked and worked accept "getCustomerCouponsByMaxPrice".
 
 To Do List:
-fix the adminServiceTests methods
-fix the companyServiceTests methods
-fix duplicate methods of getObject..
-//לתקן לפי שיטת כתיבה ב customerServiceTests
-
+make the password in HASHCODE!!
+check again the test- i think the "getCustomerCouponsByMaxPrice" not working well..
+need to re-number the tests
 readme markdown file for instructions
 

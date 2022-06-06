@@ -27,5 +27,12 @@ public class CustomerConfig {
     public static String customer3Email = "customer3@gmail.com";
 
     public static String customer3Password = "33333";
+
+    //--------------------customer To Update ---------------------------------
+    public static String customerToUpdateFirstName = "customerToUpdate";
+
+    public static String customerToUpdateEmail = "customerToupdate@gmail.com";
+
+    public static String customerToUpdatePassword = "44444";
     //
 }
