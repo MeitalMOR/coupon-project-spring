@@ -1,6 +1,6 @@
-<h1 style="text-align:center"> Coupon System - Spring</h1>
+<div style="text-align:center"><h1> Coupon System - Spring</h1></div>
 
-<center style="margin-left=50%"><img src= "couponpic.png" ></center>
+<div align="center"><img src= "couponpic.png" ></div>
 
 
 <!-- ABOUT THE PROJECT -->
@@ -42,6 +42,8 @@ Access to the system is divided into 3 types of Users:
     <li>Run <b>"CouponProjectSpringApplication"</b> class, in order to test the Applications test. </li>
     <br>
     <li>The test classes includes the logical function in the program, and the Coupon Daily Job Task.</li>
+    <br>
+    <li>CLR - Test classes were build using command line runner.</li>
     <br>
     <li>Logger (log4j) - we used the logger at the  service and test class, in order to display methods working status. </li>
 </ol>
