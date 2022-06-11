@@ -81,7 +81,7 @@ public class CompanyServiceTests {
 
         if (couponRepo.existsById(1L) && couponRepo.existsById(2L) && couponRepo.existsById(3L) &&
                 couponRepo.existsById(4L) && couponRepo.existsById(5L)) {
-            log.info("\033[0;32m" + "Test 1 - create new coupons - succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - create new coupons - succeeded" + "\033[0m");
         }
     }
 
@@ -101,7 +101,7 @@ public class CompanyServiceTests {
         List<Coupon> coupons = couponRepo.findByCompanyIdAndCategory(3L, VACATION);
 
         if (!coupons.isEmpty()) {
-            log.info("\033[0;32m" + "Test 2 - update coupon - succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - update coupon - succeeded" + "\033[0m");
         }
     }
 
@@ -112,7 +112,7 @@ public class CompanyServiceTests {
         companyService.deleteCoupon(5L);
 
         if (!couponRepo.existsById(5L)) {
-            log.info("\033[0;32m" + "Test 3 - delete coupon - succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - delete coupon - succeeded" + "\033[0m");
         }
     }
 
@@ -123,7 +123,7 @@ public class CompanyServiceTests {
         Optional<Coupon> coupon = companyService.getCoupon(4L);
 
         if (coupon.isPresent()) {
-            log.info("\033[0;32m" + "Test 4 - get coupon details - succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - get coupon details - succeeded" + "\033[0m");
         } else {
             throw new ApplicationException(ErrorType.COUPON_OUT_OF_STOCK);
         }
@@ -136,7 +136,7 @@ public class CompanyServiceTests {
         List<Coupon> companyCoupons = companyService.getCompanyCoupons(1L);
 
         if (companyCoupons.size() == 2) {
-            log.info("\033[0;32m" + "Test 5 - get coupon list by company - succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - get coupon list by company - succeeded" + "\033[0m");
         }
     }
 
@@ -147,7 +147,7 @@ public class CompanyServiceTests {
         List<Coupon> companyCouponsByCategory = companyService.getCompanyCouponsByCategory(1L, SPA_AND_BEAUTY);
 
         if (companyCouponsByCategory.size() == 1) {
-            log.info("\033[0;32m" + "Test 6 - get coupon list by company and category- succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - get coupon list by company and category- succeeded" + "\033[0m");
         }
     }
 
@@ -158,7 +158,7 @@ public class CompanyServiceTests {
         List<Coupon> companyCouponsByMaxPrice = companyService.getCompanyCouponsByMaxPrice(1L, 400.0);
 
         if (companyCouponsByMaxPrice.size() == 2) {
-            log.info("\033[0;32m" + "Test 7 - get coupon list by company id  and max price - succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - get coupon list by company id  and max price - succeeded" + "\033[0m");
         }
     }
 }

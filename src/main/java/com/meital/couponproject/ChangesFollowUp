@@ -1,9 +1,15 @@
 
 all the were checked and worked accept "getCustomerCouponsByMaxPrice".
 
+11.06.22
+1. finished last method at customer service tests (get customer details)
+2. Readme file with instructions
+3. delete the numbers of te testing. Its not necessary
+
+
+
 To Do List:
 make the password in HASHCODE!!
 check again the test- i think the "getCustomerCouponsByMaxPrice" not working well..
-need to re-number the tests
-readme markdown file for instructions
+
 

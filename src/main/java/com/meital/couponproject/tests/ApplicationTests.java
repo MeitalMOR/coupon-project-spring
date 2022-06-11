@@ -19,20 +19,20 @@ public class ApplicationTests implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-        log.info("\033[0;34m" + "Start creates Testing..........." + "\033[0m");
+        log.info("\033[0;34m" + "Start Testing creating entities ..........." + "\033[0m");
 
-        //--------------------------------Company Create Test
+        //--------------------------------Create Company Test
         adminTests.testCreateCompanies();
 
-        //--------------------------------Customer Create Test
+        //--------------------------------Create Customer Test
         adminTests.testCreateCustomers();
 
-        //--------------------------------Coupon Create Test
+        //--------------------------------Create Coupon Test
         companyTests.testCreateCoupons();
 
-        log.info("\033[0;34m" + "Start purchase Testing..........." + "\033[0m");
+        log.info("\033[0;34m" + "Start Testing purchase ..........." + "\033[0m");
 
-        //--------------------------------Purchase Coupon Test
+        //--------------------------------Coupon Purchase Test
         customerTests.testPurchaseCoupon();
 
 
@@ -78,6 +78,8 @@ public class ApplicationTests implements CommandLineRunner {
 
         //--------------------------------Company Delete Tests
         adminTests.deleteCompanyTest();
+
+        log.info("\033[0;32m" + "Finished Testings Successfully..........." + "\033[0m");
 
     }
 }

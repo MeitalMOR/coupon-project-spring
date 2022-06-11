@@ -51,7 +51,7 @@ public class AdminServiceTests {
                 .password(CompanyConfig.company3Password).build());
 
         if (companyRepo.existsById(1L) && companyRepo.existsById(2L) && companyRepo.existsById(3L)) {
-            log.info("\033[0;34m" + "Test 1 - create new companies - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - create new companies - succeeded" + "\033[0m");
         }
     }
 
@@ -68,7 +68,7 @@ public class AdminServiceTests {
             adminService.updateCompany(company.get());
 
             if (companyRepo.existsByEmail(companyToUpdateEmail)) {
-                log.info("\033[0;34m" + "Test 2 - update company - succeeded" + "\033[0m");
+                log.info("\033[0;34m" + "Test - update company - succeeded" + "\033[0m");
             }
         } else {
             throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
@@ -82,7 +82,7 @@ public class AdminServiceTests {
         adminService.deleteCompany(1L);
 
         if (!companyRepo.existsById(1L)) {
-            log.info("\033[0;34m" + "Test 3 - delete company - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - delete company - succeeded" + "\033[0m");
         }
     }
 
@@ -93,7 +93,7 @@ public class AdminServiceTests {
         List<Company> companies = adminService.getAllCompanies();
 
         if (companies.size() == 3) {
-            log.info("\033[0;34m" + "Test 4 - list of all companies - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - list of all companies - succeeded" + "\033[0m");
         }
     }
 
@@ -104,7 +104,7 @@ public class AdminServiceTests {
         Optional<Company> companyOpt = adminService.getCompany(2L);
 
         if (companyOpt.isPresent()) {
-            log.info("\033[0;34m" + "Test 5 - get company details - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - get company details - succeeded" + "\033[0m");
         }
     }
 
@@ -131,7 +131,7 @@ public class AdminServiceTests {
                 .password(CustomerConfig.customer3Password).build());
 
         if (customerRepo.existsById(1L) && customerRepo.existsById(2L) && customerRepo.existsById(3L)) {
-            log.info("\033[0;34m" + "Test 6 - create new customers - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - create new customers - succeeded" + "\033[0m");
         }
     }
 
@@ -150,7 +150,7 @@ public class AdminServiceTests {
             adminService.updateCustomer(customer.get());
 
             if (customerRepo.existsByEmail(customerToUpdateEmail)) {
-                log.info("\033[0;34m" + "Test 7 - update customer - succeeded" + "\033[0m");
+                log.info("\033[0;34m" + "Test - update customer - succeeded" + "\033[0m");
             }
         } else {
             throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
@@ -164,7 +164,7 @@ public class AdminServiceTests {
         adminService.deleteCustomer(1L);
 
         if (!customerRepo.existsById(1L)) {
-            log.info("\033[0;34m" + "Test 8 - delete customer - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - delete customer - succeeded" + "\033[0m");
         }
     }
 
@@ -174,7 +174,7 @@ public class AdminServiceTests {
 
         List<Customer> customers = adminService.getAllCustomers();
         if (customers.size() == 3) {
-            log.info("\033[0;34m" + "Test 9 - list of all customers - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - list of all customers - succeeded" + "\033[0m");
         }
     }
 
@@ -185,7 +185,7 @@ public class AdminServiceTests {
         Optional<Customer> customerOpt = adminService.getCustomer(2L);
 
         if (customerOpt.isPresent()) {
-            log.info("\033[0;34m" + "Test 10 - get customer details - succeeded" + "\033[0m");
+            log.info("\033[0;34m" + "Test - get customer details - succeeded" + "\033[0m");
         }
     }
 }

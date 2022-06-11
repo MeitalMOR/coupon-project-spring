@@ -2,6 +2,7 @@ package com.meital.couponproject.tests;
 
 import com.meital.couponproject.entities.Coupon;
 import com.meital.couponproject.entities.Customer;
+import com.meital.couponproject.enums.ErrorType;
 import com.meital.couponproject.exceptions.ApplicationException;
 import com.meital.couponproject.service.AdminService;
 import com.meital.couponproject.service.CompanyService;
@@ -38,7 +39,7 @@ public class CustomerServiceTests {
         }
         List<Coupon> customerCoupons = customerService.getCustomerCoupons(customerOpt.get().getId());
         if (!customerCoupons.isEmpty()) {
-            log.info("\033[0;32m" + "Test 1 - purchase coupon - succeeded" + "\033[0m");
+            log.info("\033[0;32m" + "Test - purchase coupon - succeeded" + "\033[0m");
 
         }
     }
@@ -50,7 +51,7 @@ public class CustomerServiceTests {
         if (customerOpt.isPresent()) {
             List<Coupon> customerCoupons = customerService.getCustomerCoupons(customerOpt.get().getId());
             if (!customerCoupons.isEmpty()) {
-                log.info("\033[0;32m" + "Test 2 - get customer coupons - succeeded" + "\033[0m");
+                log.info("\033[0;32m" + "Test - get customer coupons - succeeded" + "\033[0m");
             }
         }
     }
@@ -63,7 +64,7 @@ public class CustomerServiceTests {
             List<Coupon> customerCoupons = customerService.getCustomerCouponsByCategory
                     (customerOpt.get().getId(), SPA_AND_BEAUTY);
             if (!customerCoupons.isEmpty()) {
-                log.info("\033[0;32m" + "Test 3 - get customer coupons by category - succeeded" + "\033[0m");
+                log.info("\033[0;32m" + "Test - get customer coupons by category - succeeded" + "\033[0m");
             }
         }
     }
@@ -77,8 +78,23 @@ public class CustomerServiceTests {
             List<Coupon> customerCoupons = customerService.getCustomerCouponsByMaxPrice
                     (customerOpt.get().getId(), maxPrice);
             if (!customerCoupons.isEmpty()) {
-                log.info("\033[0;32m" + "Test 4 - get customer coupons by max price - succeeded" + "\033[0m");
+                log.info("\033[0;32m" + "Test - get customer coupons by max price - succeeded" + "\033[0m");
             }
         }
     }
+
+    //-------------------------------------get customer details ---------------------------
+    @Transactional
+    public void testGetCustomerDetails() throws ApplicationException {
+
+        Optional<Customer> customerOpt = customerService.getCustomerDetails(3L);
+
+        if (customerOpt.isPresent()) {
+            log.info("\033[0;32m" + "Test - get customer details - succeeded" + "\033[0m");
+        } else {
+            throw new ApplicationException(ErrorType.CUSTOMER_DOES_NOT_EXISTS);
+        }
+    }
+
+
 }
