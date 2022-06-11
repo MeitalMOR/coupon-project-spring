@@ -48,21 +48,21 @@ Access to the system is divided into 3 types of Users:
 </ol>
 
 <h2>Authors:</h2>
-    
-   <p>Idan Kakun</p>
+<div>
+<h3>Idan Kakun</h3>
     <a href="your-linkedin-URL">
         <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
     </a>
     <a href="https://github.com/IdanKakun">
         <img src="https://img.shields.io/badge/Github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="LinkedIn Badge"/>
     </a>
-
-   <p>Meital Mor</p>
+<h3>Meital Mor</h3>
     <a href="https://www.linkedin.com/in/meital-mor">
         <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
     </a>
     <a href="https://github.com/MeitalMOR">
-        <img src="https://img.shields.io/badge/Github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="LinkedIn Badge"/>
+   <img alt="LinkedIn Badge" src="https://img.shields.io/badge/Github-%23121011.svg?style=for-the-badge&amp;logo=github&amp;logoColor=white"/>
     </a>
+</div>
    
 
