@@ -19,7 +19,7 @@ public class ApplicationTests implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-        log.info("\033[0;34m" + "Start Testing creating entities ..........." + "\033[0m");
+        log.info("\033[1;95m" + "Start Testing creating entities ..........." + "\033[0m");
 
         //--------------------------------Create Company Test
         adminTests.testCreateCompanies();
@@ -30,13 +30,13 @@ public class ApplicationTests implements CommandLineRunner {
         //--------------------------------Create Coupon Test
         companyTests.testCreateCoupons();
 
-        log.info("\033[0;34m" + "Start Testing purchase ..........." + "\033[0m");
+        log.info("\033[95m" + "Start Testing purchase ..........." + "\033[0m");
 
         //--------------------------------Coupon Purchase Test
         customerTests.testPurchaseCoupon();
 
 
-        log.info("\033[0;32m" + "Start Getters Testing..........." + "\033[0m");
+        log.info("\033[95m" + "Start Getters Testing..........." + "\033[0m");
 
         //--------------------------------Companies Getters Tests
         adminTests.testGetCompanyDetails();
@@ -56,7 +56,7 @@ public class ApplicationTests implements CommandLineRunner {
         companyTests.testGetAllCompanyCoupons();
 
 
-        log.info("\033[0;32m" + "Start updates Testing..........." + "\033[0m");
+        log.info("\033[95m" + "Start updates Testing..........." + "\033[0m");
 
         //--------------------------------Company Update Tests
         adminTests.updateCompanyTest();
@@ -68,7 +68,7 @@ public class ApplicationTests implements CommandLineRunner {
         companyTests.testUpdateCoupon();
 
 
-        log.info("\033[0;32m" + "Start deletes Testing..........." + "\033[0m");
+        log.info("\033[95m" + "Start deletes Testing..........." + "\033[0m");
 
         //--------------------------------Coupon Delete Tests
         companyTests.testDeleteCoupon();
@@ -79,7 +79,7 @@ public class ApplicationTests implements CommandLineRunner {
         //--------------------------------Company Delete Tests
         adminTests.deleteCompanyTest();
 
-        log.info("\033[0;32m" + "Finished Testings Successfully..........." + "\033[0m");
+        log.info("\033[95m" + "Finished Testings Successfully..........." + "\033[0m");
 
     }
 }
