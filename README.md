@@ -1,4 +1,4 @@
-<div style="text-align:center"><h1> Coupon System - Spring</h1></div>
+<div align="center"><h1> Coupon System - Spring</h1></div>
 
 <div align="center"><img src= "couponpic.png" ></div>
 
