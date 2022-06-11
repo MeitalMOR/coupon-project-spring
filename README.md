@@ -2,7 +2,6 @@
 
 <div align="center"><img src= "couponpic.png" ></div>
 
-
 <!-- ABOUT THE PROJECT -->
 <h2> ⭐About The Project</h2>
 Coupon management system.
@@ -49,6 +48,21 @@ Access to the system is divided into 3 types of Users:
 </ol>
 
 <h2>Authors:</h2>
-Idan Kakun - https://github.com/IdanKakun <br>
-Meital Mor -
-https://github.com/MeitalMOR
+    
+   <p>Idan Kakun</p>
+    <a href="your-linkedin-URL">
+        <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+    </a>
+    <a href="https://github.com/IdanKakun">
+        <img src="https://img.shields.io/badge/Github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="LinkedIn Badge"/>
+    </a>
+
+   <p>Meital Mor</p>
+    <a href="https://www.linkedin.com/in/meital-mor">
+        <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+    </a>
+    <a href="https://github.com/MeitalMOR">
+        <img src="https://img.shields.io/badge/Github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="LinkedIn Badge"/>
+    </a>
+   
+
