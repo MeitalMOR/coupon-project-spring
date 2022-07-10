@@ -42,7 +42,7 @@ public class ApplicationTests implements CommandLineRunner {
         adminTests.testGetCompanyDetails();
         adminTests.testGetAllCompanies();
 
-//        //--------------------------------Customers Getters Tests
+        //--------------------------------Customers Getters Tests
         adminTests.testGetCustomerDetails();
         customerTests.getCustomerCoupons();
         customerTests.getCustomerCouponsByCategory();

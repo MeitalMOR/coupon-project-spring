@@ -27,7 +27,7 @@ public class CustomerService {
 
     //-------------------------------------------purchase coupon ----------------------------
     @Transactional
-    public  void purchaseCoupon(Long customerId, Long couponId) throws ApplicationException {
+    public void purchaseCoupon(Long customerId, Long couponId) throws ApplicationException {
 
         Optional<Customer> customerOpt = customerRepo.findById(customerId);
         Coupon coupon = couponRepo.getById(couponId);
@@ -69,9 +69,12 @@ public class CustomerService {
     //-------------------------------------get customer coupons ----------------------------
     @Transactional
     public List<Coupon> getCustomerCoupons(Long customerId) throws ApplicationException {
+        //check if customer exist
         if (!customerRepo.existsById(customerId)) {
             throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
+
+        //check if the customer have coupons
         if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
             throw new ApplicationException(COUPON_DOES_NOT_EXIST);
         }
@@ -83,13 +86,17 @@ public class CustomerService {
     //-------------------------------------get customer coupons by coupon category ----------------------------
     @Transactional
     public List<Coupon> getCustomerCouponsByCategory(Long customerId, CouponCategory couponCategory) throws ApplicationException {
+        //check if customer exist
         if (!customerRepo.existsById(customerId)) {
             throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
+
+        //check if the customer have coupons
         if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
             throw new ApplicationException(COUPON_DOES_NOT_EXIST);
         }
 
+        //get list of coupons by customer and category
         List<Coupon> couponsByCustomersIdAndCouponCategory = couponRepo.getCouponsByCustomersIdAndCategory(customerId, couponCategory);
         log.info("\033[0;33m" + "Succeeded get list of customer coupons by coupon category" + "\033[0m");
 
@@ -99,13 +106,17 @@ public class CustomerService {
     //-------------------------------------get customer coupons by max price ---------------------------
     @Transactional
     public List<Coupon> getCustomerCouponsByMaxPrice(Long customerId, Double maxPrice) throws ApplicationException {
+        //check if customer exist
         if (!customerRepo.existsById(customerId)) {
             throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
+
+        //check if the customer have coupons
         if (customerRepo.getById(customerId).getCoupons().isEmpty()) {
             throw new ApplicationException(COUPON_DOES_NOT_EXIST);
         }
 
+        //get list of coupons by customer and max price
         List<Coupon> couponsByCustomersIdAndMaxPrice = couponRepo.getCouponsByCustomersIdAndPriceLessThan(customerId, maxPrice);
         log.info("\033[0;33m" + "Succeeded get list of customer coupons by max price" + "\033[0m");
 

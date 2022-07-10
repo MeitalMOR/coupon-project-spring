@@ -21,6 +21,8 @@ import java.util.List;
 @Data
 public class Coupon {
 
+    //-------------------------coupon table definition
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)

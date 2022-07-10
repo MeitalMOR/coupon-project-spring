@@ -75,6 +75,8 @@ public class CompanyService {
 
     //-----------------------------get coupon ---------------------------
     public Optional<Coupon> getCoupon(final long couponId) throws ApplicationException {
+
+        //find coupon by id using Optional
         Optional<Coupon> couponOpt = couponRepo.findById(couponId);
 
         if (couponOpt.isEmpty()) {

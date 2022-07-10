@@ -29,14 +29,14 @@ public class CouponDailyJobTask {
     @Scheduled(fixedDelay = Constants.SINGLE_DAY_IN_MILLI_SECONDS)
     public void deleteExpiredCoupons() throws ApplicationException {
 
-        log.info("\033[0;33m" + "Task Coupon Daily Job"  + "started to run" + "\033[0m");
-
+        log.info("\033[0;33m" + "Task Coupon Daily Job" + "started to run" + "\033[0m");
         List<Coupon> coupons = couponRepo.findAll();
 
         for (Coupon c : coupons) {
-
+            //search in coupon table, coupons that expired
             if (c.getEndDate().isBefore(date)) {
 
+                //delete coupon
                 companyService.deleteCoupon(c.getId());
                 log.info("\033[0;33m" + "Coupon " + c.getId() + "deleted" + "\033[0m");
             }

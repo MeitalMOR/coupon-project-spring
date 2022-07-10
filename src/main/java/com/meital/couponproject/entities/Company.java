@@ -1,7 +1,6 @@
 package com.meital.couponproject.entities;
 
 
-import lombok.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Company {
+
+    //-------------------------company table definition
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
