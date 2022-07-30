@@ -10,25 +10,25 @@ import java.util.List;
 @Repository
 public interface CouponRepo extends JpaRepository<Coupon, Long> {
 
-    //get all coupons by company id
+    //Get all coupons by company ID
     List<Coupon> getCouponsByCompanyId(Long companyId);
 
-    //get all coupons by customer id
+    //Get all coupons by customer ID
     List<Coupon> getCouponsByCustomersId(Long customerId);
 
-    //get all coupons by customer id and category
+    //Get all coupons by customer ID and category
     List<Coupon> getCouponsByCustomersIdAndCategory(Long customerId, CouponCategory couponCategory);
 
-    //get all coupons by customer id and max price
-    List<Coupon> getCouponsByCustomersIdAndPriceLessThan(Long customerId,Double price);
+    //Get all coupons by customer ID and max price
+    List<Coupon> getCouponsByCustomersIdAndPriceLessThan(Long customerId, Double price);
 
-    //check if coupon exist by coupon title
+    //Check if a coupon exists by the coupon title
     boolean existsByTitleIgnoreCase(String title);
 
-    //get all coupons by company and category
+    //Get all coupons by company and category
     List<Coupon> findByCompanyIdAndCategory(Long companyId, CouponCategory couponCategory);
 
-    //get all coupons by company and max price
+    //Get all coupons by company and max price
     List<Coupon> findByCompanyIdAndPriceLessThan(Long companyId, Double price);
 
 

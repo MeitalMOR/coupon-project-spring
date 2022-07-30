@@ -26,17 +26,17 @@ public class AdminService {
     //--------------------------------create new company --------------------------
     public Company createCompany(final Company company) throws ApplicationException {
 
-        //check if company exists by name
+        //Check if the company exists by name
         if (companyRepo.existsByName(company.getName())) {
             throw new ApplicationException(COMPANY_NAME_ALREADY_EXISTS);
         }
 
-        //check if company exists by email
+        //Check if the company exists by email
         if (companyRepo.existsByEmail(company.getEmail())) {
             throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
 
-        //create new company
+        //Create a new company
         companyRepo.save(company);
         log.info("\033[0;33m" + "Company created successfully" + "\033[0m");
 
@@ -46,12 +46,12 @@ public class AdminService {
     //--------------------------------update company -------------------------------
     public Company updateCompany(final Company company) throws ApplicationException {
 
-        //check if company exists by id
+        //Check if the company exists by ID
         if (!companyRepo.existsById(company.getId())) {
             throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
         }
 
-        //update company
+        //Update company
         companyRepo.saveAndFlush(company);
         log.info("\033[0;33m" + "Company updated successfully" + "\033[0m");
 
@@ -61,15 +61,15 @@ public class AdminService {
     //----------------------------------delete company -------------------------------
     public void deleteCompany(final long companyId) throws ApplicationException {
 
-        //find company by id using Optional
+        //Find a company by its id using Optional
         Optional<Company> companyOpt = companyRepo.findById(companyId);
 
-        //check if company exists
+        //Check if the company exists
         if (companyOpt.isEmpty()) {
             throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
         }
 
-        //delete company
+        //Delete company
         companyRepo.deleteById(companyId);
         log.info("\033[0;33m" + "Company deleted successfully" + "\033[0m");
     }
@@ -77,7 +77,7 @@ public class AdminService {
     //------------------------------get all companies ----------------------------------
     public List<Company> getAllCompanies() throws ApplicationException {
 
-        //find all companies
+        //Find all companies
         List<Company> companies = companyRepo.findAll();
 
         if (companies.isEmpty()) {
@@ -91,7 +91,7 @@ public class AdminService {
     //---------------------------------get company ---------------------------------
     public Optional<Company> getCompany(final long companyId) throws ApplicationException {
 
-        //find company by id using Optional
+        //Find a company by its id using Optional
         Optional<Company> companyOpt = companyRepo.findById(companyId);
 
         if (companyOpt.isEmpty()) {
@@ -106,12 +106,12 @@ public class AdminService {
     //------------------------------------create new customer -----------------------------
     public Customer createCustomer(final Customer customer) throws ApplicationException {
 
-        //check if customer exist by email
+        //Check if customer exists by email
         if (customerRepo.existsByEmail(customer.getEmail())) {
             throw new ApplicationException(EMAIL_ALREADY_EXISTS);
         }
 
-        //create new customer
+        //Create new customer
         customerRepo.save(customer);
         log.info("\033[0;33m" + "Customer created successfully" + "\033[0m");
 
@@ -121,12 +121,12 @@ public class AdminService {
     //--------------------------------update customer -----------------------------------
     public Customer updateCustomer(final Customer customer) throws ApplicationException {
 
-        //check if customer exists by id
+        //Check if customer exists by ID
         if (!customerRepo.existsById(customer.getId())) {
             throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
-        //update customer
+        //Update customer
         customerRepo.saveAndFlush(customer);
         log.info("\033[0;33m" + "Customer updated successfully" + "\033[0m");
 
@@ -136,14 +136,14 @@ public class AdminService {
     //---------------------------------delete customer --------------------------------------
     public void deleteCustomer(final long customerId) throws ApplicationException {
 
-        //find customer by id using Optional
+        //Find customer by id using Optional
         Optional<Customer> customerOpt = customerRepo.findById(customerId);
 
         if (customerOpt.isEmpty()) {
             throw new ApplicationException(CUSTOMER_DOES_NOT_EXISTS);
         }
 
-        //delete customer
+        //Delete customer
         customerRepo.deleteById(customerId);
         log.info("\033[0;33m" + "Customer deleted successfully" + "\033[0m");
 
@@ -152,7 +152,7 @@ public class AdminService {
     //--------------------------------get all customers -------------------------------
     public List<Customer> getAllCustomers() throws ApplicationException {
 
-        //find all customers
+        //Find all customers
         List<Customer> customers = customerRepo.findAll();
 
         if (customers.isEmpty()) {
@@ -166,7 +166,7 @@ public class AdminService {
     //------------------------------get customer by ID ----------------------------
     public Optional<Customer> getCustomer(final long customerId) throws ApplicationException {
 
-        //find customer by id using Optional
+        //Find customer by id using Optional
         Optional<Customer> customerOpt = customerRepo.findById(customerId);
 
         if (customerOpt.isEmpty()) {
@@ -176,6 +176,4 @@ public class AdminService {
         log.info("\033[0;33m" + "Succeeded get customer details" + "\033[0m");
         return customerOpt;
     }
-
-
 }

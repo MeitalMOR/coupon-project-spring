@@ -35,9 +35,11 @@ public class CustomerServiceTests {
         Optional<Customer> customerOpt = adminService.getCustomer(1L);
         Optional<Coupon> couponOpt = companyService.getCoupon(1L);
         if (customerOpt.isPresent() && couponOpt.isPresent()) {
+            //Purchase coupons
             customerService.purchaseCoupon(customerOpt.get().getId(), couponOpt.get().getId());
             customerService.purchaseCoupon(customerOpt.get().getId(), 2L);
         }
+
         List<Coupon> customerCoupons = customerService.getCustomerCoupons(customerOpt.get().getId());
         if (!customerCoupons.isEmpty()) {
             log.info("\033[0;32m" + "Test - purchase coupon - succeeded" + "\033[0m");
@@ -48,9 +50,12 @@ public class CustomerServiceTests {
     //-------------------------------------get customer coupons ----------------------------
     @Transactional
     public void getCustomerCoupons() throws ApplicationException {
+
         Optional<Customer> customerOpt = adminService.getCustomer(1L);
+
         if (customerOpt.isPresent()) {
             List<Coupon> customerCoupons = customerService.getCustomerCoupons(customerOpt.get().getId());
+
             if (!customerCoupons.isEmpty()) {
                 log.info("\033[0;32m" + "Test - get customer coupons - succeeded" + "\033[0m");
             }
@@ -60,10 +65,13 @@ public class CustomerServiceTests {
     //-------------------------------------get customer coupons by coupon category ----------------------------
     @Transactional
     public void getCustomerCouponsByCategory() throws ApplicationException {
+
         Optional<Customer> customerOpt = adminService.getCustomer(1L);
+
         if (customerOpt.isPresent()) {
             List<Coupon> customerCoupons = customerService.getCustomerCouponsByCategory
                     (customerOpt.get().getId(), SPA_AND_BEAUTY);
+
             if (!customerCoupons.isEmpty()) {
                 log.info("\033[0;32m" + "Test - get customer coupons by category - succeeded" + "\033[0m");
             }
@@ -73,11 +81,14 @@ public class CustomerServiceTests {
     //-------------------------------------get customer coupons by max price ---------------------------
     @Transactional
     public void getCustomerCouponsByMaxPrice() throws ApplicationException {
+
         double maxPrice = 400;
         Optional<Customer> customerOpt = adminService.getCustomer(1L);
+
         if (customerOpt.isPresent()) {
             List<Coupon> customerCoupons = customerService.getCustomerCouponsByMaxPrice
                     (1L, maxPrice);
+
             if (!customerCoupons.isEmpty()) {
                 log.info("\033[0;32m" + "Test - get customer coupons by max price - succeeded" + "\033[0m");
             }

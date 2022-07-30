@@ -35,6 +35,7 @@ public class AdminServiceTests {
     @Transactional
     public void testCreateCompanies() throws ApplicationException {
 
+        //Build 3 companies
         adminService.createCompany(Company.builder()
                 .name(CompanyConfig.company1Name)
                 .email(CompanyConfig.company1Email)
@@ -59,17 +60,21 @@ public class AdminServiceTests {
     @Transactional
     public void updateCompanyTest() throws ApplicationException {
 
+        //Get company by id
         Optional<Company> company = adminService.getCompany(2L);
-        if (company.isPresent()) {
 
+        if (company.isPresent()) {
+            //set email and password to update
             company.get().setEmail(companyToUpdateEmail);
             company.get().setPassword(companyToUpdatePassword);
 
+            //Update company
             adminService.updateCompany(company.get());
 
             if (companyRepo.existsByEmail(companyToUpdateEmail)) {
                 log.info("\033[0;32m" + "Test - update company - succeeded" + "\033[0m");
             }
+
         } else {
             throw new ApplicationException(COMPANY_DOES_NOT_EXISTS);
         }
@@ -78,7 +83,7 @@ public class AdminServiceTests {
     //--------------------------------delete company test
     @Transactional
     public void deleteCompanyTest() throws ApplicationException {
-
+        //Delete company
         adminService.deleteCompany(1L);
 
         if (!companyRepo.existsById(1L)) {
@@ -89,7 +94,7 @@ public class AdminServiceTests {
     //--------------------------------list of all companies test
     @Transactional
     public void testGetAllCompanies() throws ApplicationException {
-
+        //Get list of all companies
         List<Company> companies = adminService.getAllCompanies();
 
         if (companies.size() == 3) {
@@ -111,7 +116,7 @@ public class AdminServiceTests {
     //--------------------------------create new customer test
     @Transactional
     public void testCreateCustomers() throws ApplicationException {
-
+        //Create 3 customers
         adminService.createCustomer(Customer.builder()
                 .firstName(CustomerConfig.customer1FirstName)
                 .lastName(CustomerConfig.customer1LastName)
@@ -138,15 +143,16 @@ public class AdminServiceTests {
     //--------------------------------update customer test
     @Transactional
     public void testUpdateCustomer() throws ApplicationException {
-
+        //Get customer by ID
         Optional<Customer> customer = adminService.getCustomer(2L);
 
         if (customer.isPresent()) {
-
+            //Set customer first name, email and password
             customer.get().setFirstName(customerToUpdateFirstName);
             customer.get().setEmail(customerToUpdateEmail);
             customer.get().setPassword(customerToUpdatePassword);
 
+            //Update customer
             adminService.updateCustomer(customer.get());
 
             if (customerRepo.existsByEmail(customerToUpdateEmail)) {
@@ -160,7 +166,7 @@ public class AdminServiceTests {
     //--------------------------------delete customer test
     @Transactional
     public void testDeleteCustomer() throws ApplicationException {
-
+        //delete customer
         adminService.deleteCustomer(1L);
 
         if (!customerRepo.existsById(1L)) {
